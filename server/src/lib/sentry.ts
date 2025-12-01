@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/node';
-import { ProfilingIntegration } from '@sentry/profiling-node';
 import type { Express } from 'express';
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -22,22 +21,9 @@ export function initSentry(app: Express) {
     
     // Release tracking
     release: process.env.RELEASE_VERSION || 'dev',
-    
-    // Integrations
-    integrations: [
-      // Express integration
-      new Sentry.Integrations.Http({ tracing: true }),
-      new Sentry.Integrations.Express({ app }),
-      
-      // Profiling (apenas em produção)
-      ...(isProduction ? [new ProfilingIntegration()] : []),
-    ],
 
     // Performance monitoring
     tracesSampleRate: isProduction ? 0.1 : 1.0, // 10% em prod, 100% em dev
-    
-    // Profiling (apenas em produção)
-    profilesSampleRate: isProduction ? 0.1 : 0,
 
     // Filtros de eventos
     beforeSend(event, hint) {
@@ -129,23 +115,3 @@ export function addBreadcrumb(
     data,
   });
 }
-
-/**
- * Middleware de request handler do Sentry
- */
-export const sentryRequestHandler = Sentry.Handlers.requestHandler();
-
-/**
- * Middleware de tracing do Sentry
- */
-export const sentryTracingHandler = Sentry.Handlers.tracingHandler();
-
-/**
- * Middleware de error handler do Sentry
- */
-export const sentryErrorHandler = Sentry.Handlers.errorHandler({
-  shouldHandleError(error) {
-    // Capturar apenas erros 500+
-    return true;
-  },
-});

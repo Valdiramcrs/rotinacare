@@ -10,4 +10,4 @@ export const createDoctorSchema = z.object({
   state: z.string().optional(),
 });
 
-export type CreateDoctorInput = z.infer<typeof createDoctorSchema>;
+export type CreateDoctorSchema = z.infer<typeof createDoctorSchema>;

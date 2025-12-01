@@ -1,4 +1,5 @@
 import { db } from '../db';
+import { sql } from 'drizzle-orm';
 import { logger } from './logger';
 
 export interface HealthCheckResult {
@@ -30,7 +31,7 @@ async function checkDatabase(): Promise<HealthCheck> {
   
   try {
     // Tenta fazer uma query simples
-    await db.execute('SELECT 1');
+    await db.execute(sql`SELECT 1`)
     
     const responseTime = Date.now() - start;
     

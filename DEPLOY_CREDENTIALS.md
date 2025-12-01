@@ -33,6 +33,36 @@ DATABASE_URL=postgresql://postgres:123Mud@r@db.pcthuczsisjnnettogln.supabase.co:
 ---
 
 ## Railway (Backend API)
+
+**Projeto:** confident-luck  
+**Environment:** production  
+**Region:** us-west1 (Legacy)  
+**Status:** 🔄 DEPLOYING
+
+### Service Details
+- **Service Name:** @rotinacare/server
+- **Repository:** https://github.com/Valdiramcrs/rotinacare
+- **Root Directory:** server/
+- **Build Command:** pnpm install && pnpm build
+- **Start Command:** pnpm start
+
+### Environment Variables Configured
+```env
+DATABASE_URL=postgresql://postgres.pcthuczsisjnnettogln:123Mud@r@aws-0-us-west-2.pooler.supabase.com:6543/postgres
+NODE_ENV=production
+PORT=4000
+JWT_SECRET=rotinacare-super-secret-jwt-key-2024
+CORS_ORIGIN=*
+```
+
+### Dashboard
+- **Project URL:** https://railway.com/project/f3ea3d36-3c51-447a-9157-b3b53345972c
+- **Service URL:** (será gerado após deploy completo)
+
+### Deployment Status
+- ✅ Variáveis configuradas
+- 🔄 Build em progresso
+- ⏳ Aguardando URL pública
 _A ser preenchido_
 
 ---

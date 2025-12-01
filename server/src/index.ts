@@ -1,6 +1,6 @@
 import express from 'express';
 import { logger } from './lib/logger';
-import { initSentry, sentryRequestHandler, sentryTracingHandler, sentryErrorHandler } from './lib/sentry';
+import { initSentry } from './lib/sentry';
 import { httpLogger, requestIdMiddleware, errorLoggingMiddleware } from './middleware/logging';
 import cors from 'cors';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
@@ -13,10 +13,6 @@ const app = express();
 
 // Inicializar Sentry
 initSentry(app);
-
-// Sentry request handler (deve ser o primeiro middleware)
-app.use(sentryRequestHandler);
-app.use(sentryTracingHandler);
 
 // Request ID middleware
 app.use(requestIdMiddleware);
@@ -78,9 +74,6 @@ const PORT = process.env.PORT || 4000;
 
 // Error logging middleware
 app.use(errorLoggingMiddleware);
-
-// Sentry error handler (deve ser o último middleware)
-app.use(sentryErrorHandler);
 
 app.listen(PORT, () => {
   logger.info(`🚀 Server running on http://localhost:${PORT}`);

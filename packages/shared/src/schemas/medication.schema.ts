@@ -9,4 +9,4 @@ export const createMedicationSchema = z.object({
   notes: z.string().optional(),
 });
 
-export type CreateMedicationInput = z.infer<typeof createMedicationSchema>;
+export type CreateMedicationSchema = z.infer<typeof createMedicationSchema>;
