@@ -1,0 +1,39 @@
+{
+  "name": "rotinacare",
+  "private": true,
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:landing": "pnpm --filter @rotinacare/landing dev",
+    "dev:app": "pnpm --filter @rotinacare/app dev",
+    "dev:admin": "pnpm --filter @rotinacare/admin dev",
+    "dev:server": "pnpm --filter @rotinacare/server dev",
+    "build": "turbo run build",
+    "build:landing": "pnpm --filter @rotinacare/landing build",
+    "build:app": "pnpm --filter @rotinacare/app build",
+    "build:admin": "pnpm --filter @rotinacare/admin build",
+    "lint": "turbo run lint",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "deploy:landing": "vercel --prod --cwd apps/landing",
+    "deploy:app": "vercel --prod --cwd apps/app",
+    "deploy:admin": "vercel --prod --cwd apps/admin",
+    "deploy:all": "pnpm deploy:landing && pnpm deploy:app && pnpm deploy:admin"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@vitest/ui": "^4.0.14",
+    "jsdom": "^27.2.0",
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^4.0.14"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "dependencies": {
+    "@sentry/react": "^10.27.0",
+    "@sentry/tracing": "^7.120.4"
+  }
+}
