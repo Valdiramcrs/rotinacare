@@ -272,23 +272,20 @@ export function Home() {
       </section>
 
       {/* Final CTA Section */}
-      <section className="bg-gradient-to-b from-blue-50 to-white py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Pronto para organizar sua saúde?
-            </h2>
-            <p className="text-xl text-gray-600 mb-8">
-              Junte-se a milhares de pessoas que já estão cuidando melhor da sua saúde com o RotinaCare
-            </p>
-            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
-              <a href="https://app.rotinacare.com/register" className="inline-flex items-center gap-2">
-                Começar Agora Gratuitamente
-                <ArrowRight className="w-4 h-4" />
-              </a>
-            </Button>
-          </div>
-        </div>
+      <section className="container mx-auto px-4 py-20 text-center">
+        <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          Pronto para organizar sua saúde?
+        </h2>
+        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          Junte-se a milhares de pessoas que já estão cuidando melhor da sua saúde com o RotinaCare
+        </p>
+        <a 
+          href="https://app.rotinacare.com/register" 
+          className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all disabled:pointer-events-none disabled:opacity-50 shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-10 rounded-md text-lg px-8"
+        >
+          Começar Agora Gratuitamente
+          <ArrowRight className="ml-2 h-5 w-5" />
+        </a>
       </section>
     </div>
   );
