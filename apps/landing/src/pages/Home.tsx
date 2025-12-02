@@ -1,4 +1,5 @@
 import { Button } from '@rotinacare/ui';
+import { useState } from 'react';
 import { 
   Clock, 
   Heart, 
@@ -12,8 +13,11 @@ import {
   ArrowRight,
   Check
 } from 'lucide-react';
+import { DemoModal } from '../components/DemoModal';
 
 export function Home() {
+  const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
+
   return (
     <div>
       {/* Hero Section */}
@@ -40,7 +44,10 @@ export function Home() {
             Começar Gratuitamente
             <ArrowRight className="ml-2 h-5 w-5" />
           </a>
-          <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all disabled:pointer-events-none disabled:opacity-50 shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-transparent shadow-xs hover:bg-accent dark:bg-transparent dark:border-input dark:hover:bg-input/50 h-10 rounded-md text-lg px-8">
+          <button 
+            onClick={() => setIsDemoModalOpen(true)}
+            className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all disabled:pointer-events-none disabled:opacity-50 shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-transparent shadow-xs hover:bg-accent dark:bg-transparent dark:border-input dark:hover:bg-input/50 h-10 rounded-md text-lg px-8"
+          >
             Ver Demonstração
           </button>
         </div>
@@ -287,6 +294,12 @@ export function Home() {
           <ArrowRight className="ml-2 h-5 w-5" />
         </a>
       </section>
+
+      {/* Demo Modal */}
+      <DemoModal 
+        isOpen={isDemoModalOpen} 
+        onClose={() => setIsDemoModalOpen(false)} 
+      />
     </div>
   );
 }
