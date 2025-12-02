@@ -1,2 +1,2 @@
-export * from './doctor.schema';
-export * from './medication.schema';
+export * from './doctor.schema.js';
+export * from './medication.schema.js';
