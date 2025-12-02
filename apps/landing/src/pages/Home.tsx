@@ -17,55 +17,37 @@ export function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-blue-50 to-white py-20 md:py-32">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm mb-8">
-              <Sparkles className="w-4 h-4 text-blue-600" />
-              <span className="text-sm text-gray-700">Seu Prontuário Médico Inteligente</span>
-            </div>
-            
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-              Sua saúde organizada,<br />
-              <span className="text-blue-600">em um só lugar</span>
-            </h1>
-            
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              O RotinaCare é o prontuário eletrônico que ajuda você a gerenciar sua saúde 
-              com inteligência artificial, segurança e praticidade.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
-                <a href="https://app.rotinacare.com/register" className="inline-flex items-center gap-2">
-                  Começar Gratuitamente
-                  <ArrowRight className="w-4 h-4" />
-                </a>
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-              >
-                Ver Demonstração
-              </Button>
-            </div>
-            
-            <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
-              <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-green-600" />
-                <span>Sem cartão de crédito</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-green-600" />
-                <span>Configuração em 2 minutos</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-green-600" />
-                <span>Cancele quando quiser</span>
-              </div>
-            </div>
-          </div>
+      <section className="container mx-auto px-4 py-20 text-center">
+        <span className="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 gap-1 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden border-transparent bg-secondary text-secondary-foreground mb-4">
+          <Sparkles className="h-3 w-3 mr-1" />
+          Seu Prontuário Médico Inteligente
+        </span>
+        
+        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+          Sua saúde organizada,<br />
+          <span className="text-blue-600">em um só lugar</span>
+        </h1>
+        
+        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          O RotinaCare é o prontuário eletrônico que ajuda você a gerenciar sua saúde com inteligência artificial, segurança e praticidade.
+        </p>
+        
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <a 
+            href="https://app.rotinacare.com/register" 
+            className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all disabled:pointer-events-none disabled:opacity-50 shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-10 rounded-md text-lg px-8"
+          >
+            Começar Gratuitamente
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </a>
+          <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all disabled:pointer-events-none disabled:opacity-50 shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-transparent shadow-xs hover:bg-accent dark:bg-transparent dark:border-input dark:hover:bg-input/50 h-10 rounded-md text-lg px-8">
+            Ver Demonstração
+          </button>
         </div>
+        
+        <p className="text-sm text-gray-500 mt-4">
+          ✓ Sem cartão de crédito ✓ Configuração em 2 minutos ✓ Cancele quando quiser
+        </p>
       </section>
 
       {/* Benefits Section */}
