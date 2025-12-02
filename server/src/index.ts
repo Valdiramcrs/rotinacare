@@ -2,7 +2,7 @@ import express from 'express';
 import { logger } from './lib/logger.js';
 import cors from 'cors';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
-import { appRouter } from './routers.js';
+import { appRouter } from './routers/index.js';
 import { createContext } from './trpc.js';
 
 const app = express();
