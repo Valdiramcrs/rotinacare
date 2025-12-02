@@ -36,7 +36,7 @@ export function Home() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700" asChild>
+              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
                 <a href="https://app.rotinacare.com/register" className="inline-flex items-center gap-2">
                   Começar Gratuitamente
                   <ArrowRight className="w-4 h-4" />
@@ -236,9 +236,9 @@ export function Home() {
             </div>
 
             {/* Plano Premium */}
-            <div className="bg-white p-8 rounded-2xl border-2 border-blue-600 relative">
+            <div className="bg-white p-8 rounded-2xl border-2 border-primary relative">
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <span className="bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold">
                   Mais Popular
                 </span>
               </div>
@@ -252,7 +252,7 @@ export function Home() {
               </div>
 
               <Button 
-                className="w-full mb-6 bg-blue-600 hover:bg-blue-700"
+                className="w-full mb-6 bg-primary text-primary-foreground hover:bg-primary/90"
                 asChild
               >
                 <a href="https://app.rotinacare.com/register">Assinar Agora</a>
@@ -299,7 +299,7 @@ export function Home() {
             <p className="text-xl text-gray-600 mb-8">
               Junte-se a milhares de pessoas que já estão cuidando melhor da sua saúde com o RotinaCare
             </p>
-            <Button size="lg" className="bg-blue-600 hover:bg-blue-700" asChild>
+            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
               <a href="https://app.rotinacare.com/register" className="inline-flex items-center gap-2">
                 Começar Agora Gratuitamente
                 <ArrowRight className="w-4 h-4" />
