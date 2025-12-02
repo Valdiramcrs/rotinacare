@@ -1,92 +1,312 @@
 import { Button } from '@rotinacare/ui';
+import { 
+  Clock, 
+  Heart, 
+  Lock, 
+  FileText, 
+  Calendar, 
+  Sparkles, 
+  Users, 
+  Shield, 
+  Activity,
+  ArrowRight,
+  Check
+} from 'lucide-react';
 
 export function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 md:py-32">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-            Cuide da sua saúde de forma{' '}
-            <span className="text-primary">organizada</span>
-          </h1>
-          <p className="text-xl text-muted-foreground mb-8">
-            Gerencie consultas, medicamentos, exames e muito mais em um só lugar.
-            Sua rotina de saúde nunca foi tão simples.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" asChild>
-              <a href="https://app.rotinacare.com/register">
-                Começar gratuitamente
-              </a>
-            </Button>
-            <Button size="lg" variant="outline" asChild>
-              <a href="/features">Conhecer funcionalidades</a>
-            </Button>
+      <section className="bg-gradient-to-b from-blue-50 to-white py-20 md:py-32">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm mb-8">
+              <Sparkles className="w-4 h-4 text-blue-600" />
+              <span className="text-sm text-gray-700">Seu Prontuário Médico Inteligente</span>
+            </div>
+            
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+              Sua saúde organizada,{' '}
+              <span className="text-blue-600">em um só lugar</span>
+            </h1>
+            
+            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+              O RotinaCare é o prontuário eletrônico que ajuda você a gerenciar sua saúde 
+              com inteligência artificial, segurança e praticidade.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+              <Button size="lg" className="bg-blue-600 hover:bg-blue-700" asChild>
+                <a href="https://app.rotinacare.com/register" className="inline-flex items-center gap-2">
+                  Começar Gratuitamente
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-2 border-dashed border-red-400 text-red-600 hover:bg-red-50"
+              >
+                Ver Demonstração
+              </Button>
+            </div>
+            
+            <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
+              <div className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-green-600" />
+                <span>Sem cartão de crédito</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-green-600" />
+                <span>Configuração em 2 minutos</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-green-600" />
+                <span>Cancele quando quiser</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="bg-white p-8 rounded-xl border border-gray-200 text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Clock className="w-8 h-8 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Economize Tempo</h3>
+              <p className="text-gray-600">
+                Acesse todo seu histórico médico em segundos, sem precisar procurar papéis.
+              </p>
+            </div>
+
+            <div className="bg-white p-8 rounded-xl border border-gray-200 text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Heart className="w-8 h-8 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Cuide da Sua Saúde</h3>
+              <p className="text-gray-600">
+                Acompanhe tratamentos, medicamentos e exames de forma organizada.
+              </p>
+            </div>
+
+            <div className="bg-white p-8 rounded-xl border border-gray-200 text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Lock className="w-8 h-8 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Dados Protegidos</h3>
+              <p className="text-gray-600">
+                Seus dados médicos seguros e acessíveis apenas por você.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="bg-muted/50 py-20">
+      <section className="bg-gradient-to-b from-gray-50 to-white py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            Tudo que você precisa para cuidar da sua saúde
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-background p-6 rounded-lg border">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                </svg>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Tudo que você precisa para cuidar da sua saúde
+            </h2>
+            <p className="text-xl text-gray-600">
+              Recursos completos para organizar e acompanhar seu histórico médico
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="bg-white p-8 rounded-xl border border-gray-200">
+              <div className="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <FileText className="w-7 h-7 text-blue-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Consultas</h3>
-              <p className="text-muted-foreground">
-                Organize todas as suas consultas médicas com lembretes automáticos.
+              <h3 className="text-xl font-semibold mb-3">Prontuário Eletrônico Completo</h3>
+              <p className="text-gray-600">
+                Organize todos os seus dados médicos em um só lugar: exames, medicamentos, 
+                diagnósticos e procedimentos.
               </p>
             </div>
 
-            <div className="bg-background p-6 rounded-lg border">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                </svg>
+            <div className="bg-white p-8 rounded-xl border border-gray-200">
+              <div className="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <Calendar className="w-7 h-7 text-blue-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Medicamentos</h3>
-              <p className="text-muted-foreground">
-                Controle seus medicamentos e nunca mais esqueça de tomar.
+              <h3 className="text-xl font-semibold mb-3">Agenda Inteligente</h3>
+              <p className="text-gray-600">
+                Gerencie consultas, lembretes de medicamentos e acompanhamento de tratamentos 
+                com facilidade.
               </p>
             </div>
 
-            <div className="bg-background p-6 rounded-lg border">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
+            <div className="bg-white p-8 rounded-xl border border-gray-200">
+              <div className="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <Sparkles className="w-7 h-7 text-blue-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Exames</h3>
-              <p className="text-muted-foreground">
-                Armazene e acompanhe todos os seus exames em um só lugar.
+              <h3 className="text-xl font-semibold mb-3">Assistente IA</h3>
+              <p className="text-gray-600">
+                Análise inteligente de exames e recomendações personalizadas baseadas no seu 
+                histórico médico.
+              </p>
+            </div>
+
+            <div className="bg-white p-8 rounded-xl border border-gray-200">
+              <div className="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <Users className="w-7 h-7 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Compartilhamento Seguro</h3>
+              <p className="text-gray-600">
+                Compartilhe informações com médicos e familiares de forma controlada e segura.
+              </p>
+            </div>
+
+            <div className="bg-white p-8 rounded-xl border border-gray-200">
+              <div className="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <Shield className="w-7 h-7 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Segurança e Privacidade</h3>
+              <p className="text-gray-600">
+                Seus dados protegidos com criptografia de ponta e conformidade com LGPD.
+              </p>
+            </div>
+
+            <div className="bg-white p-8 rounded-xl border border-gray-200">
+              <div className="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <Activity className="w-7 h-7 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Estatísticas de Saúde</h3>
+              <p className="text-gray-600">
+                Visualize tendências, gráficos e insights sobre sua saúde ao longo do tempo.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="container mx-auto px-4 py-20">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">
-            Pronto para começar?
-          </h2>
-          <p className="text-xl text-muted-foreground mb-8">
-            Crie sua conta gratuitamente e comece a organizar sua saúde hoje mesmo.
-          </p>
-          <Button size="lg" asChild>
-            <a href="https://app.rotinacare.com/register">
-              Criar conta grátis
-            </a>
-          </Button>
+      {/* Pricing Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Planos para todas as necessidades
+            </h2>
+            <p className="text-xl text-gray-600">
+              Comece grátis e faça upgrade quando precisar
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Plano Gratuito */}
+            <div className="bg-white p-8 rounded-2xl border-2 border-gray-200">
+              <h3 className="text-2xl font-bold mb-2">Gratuito</h3>
+              <p className="text-gray-600 mb-6">Ideal para começar</p>
+              
+              <div className="mb-6">
+                <span className="text-4xl font-bold">R$ 0</span>
+                <span className="text-gray-600">/mês</span>
+              </div>
+
+              <Button 
+                variant="outline" 
+                className="w-full mb-6"
+                asChild
+              >
+                <a href="https://app.rotinacare.com/register">Começar Grátis</a>
+              </Button>
+
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Até 10 exames</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Prontuário básico</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Agenda de consultas</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Suporte por email</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Plano Premium */}
+            <div className="bg-white p-8 rounded-2xl border-2 border-blue-600 relative">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <span className="bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                  Mais Popular
+                </span>
+              </div>
+
+              <h3 className="text-2xl font-bold mb-2">Premium</h3>
+              <p className="text-gray-600 mb-6">Recomendado para uso completo</p>
+              
+              <div className="mb-6">
+                <span className="text-4xl font-bold">R$ 29,90</span>
+                <span className="text-gray-600">/mês</span>
+              </div>
+
+              <Button 
+                className="w-full mb-6 bg-blue-600 hover:bg-blue-700"
+                asChild
+              >
+                <a href="https://app.rotinacare.com/register">Assinar Agora</a>
+              </Button>
+
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Exames ilimitados</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Assistente IA completo</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Compartilhamento seguro</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Estatísticas avançadas</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Suporte prioritário</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Backup automático</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="bg-gradient-to-b from-blue-50 to-white py-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Pronto para organizar sua saúde?
+            </h2>
+            <p className="text-xl text-gray-600 mb-8">
+              Junte-se a milhares de pessoas que já estão cuidando melhor da sua saúde com o RotinaCare
+            </p>
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700" asChild>
+              <a href="https://app.rotinacare.com/register" className="inline-flex items-center gap-2">
+                Começar Agora Gratuitamente
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </Button>
+          </div>
         </div>
       </section>
     </div>
