@@ -76,7 +76,7 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-6xl bg-white rounded-2xl shadow-2xl overflow-hidden"
+        className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -94,32 +94,32 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
         </div>
 
         {/* Content */}
-        <div className="p-8">
-          <div className="flex flex-col gap-6">
+        <div className="p-6">
+          <div className="flex flex-col gap-4">
             {/* Screenshot */}
-            <div className="w-full rounded-xl overflow-hidden border-2 border-gray-200 shadow-lg">
+            <div className="w-full rounded-lg overflow-hidden border border-gray-200 shadow-sm">
               <img
                 src={demoSlides[currentSlide].image}
                 alt={demoSlides[currentSlide].title}
-                className="w-full h-auto"
+                className="w-full h-auto max-h-96 object-contain bg-gray-50"
               />
             </div>
 
             {/* Slide Content */}
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">
+              <h3 className="text-xl font-bold text-gray-900 mb-2">
                 {demoSlides[currentSlide].title}
               </h3>
-              <p className="text-lg text-gray-600 mb-6">
+              <p className="text-base text-gray-600 mb-4">
                 {demoSlides[currentSlide].description}
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {demoSlides[currentSlide].features.map((feature, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div key={index} className="flex items-start gap-2">
+                    <div className="w-4 h-4 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <svg
-                        className="w-3 h-3 text-green-600"
+                        className="w-2.5 h-2.5 text-green-600"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -132,7 +132,7 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
                         />
                       </svg>
                     </div>
-                    <span className="text-gray-700">{feature}</span>
+                    <span className="text-sm text-gray-700">{feature}</span>
                   </div>
                 ))}
               </div>
@@ -178,14 +178,14 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
         </div>
 
         {/* Footer CTA */}
-        <div className="p-6 bg-blue-50 border-t">
+        <div className="p-4 bg-blue-50 border-t">
           <div className="text-center">
-            <p className="text-gray-700 mb-4">
+            <p className="text-sm text-gray-700 mb-3">
               Pronto para experimentar? Comece gratuitamente agora!
             </p>
             <a
               href="https://app.rotinacare.com/register"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
             >
               Começar Gratuitamente
             </a>
