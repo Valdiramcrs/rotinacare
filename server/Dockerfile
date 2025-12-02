@@ -30,14 +30,25 @@ RUN npm install -g pnpm@9.0.0
 
 WORKDIR /app
 
-# Copiar apenas arquivos necessários
-COPY --from=builder /app/server/dist ./dist
-COPY --from=builder /app/server/package.json ./
-COPY --from=builder /app/server/node_modules ./node_modules
+# Copiar arquivos de dependências
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY server/package.json ./server/
+COPY packages/shared/package.json ./packages/shared/
+
+# Instalar APENAS dependências de produção
+RUN pnpm install --frozen-lockfile --prod
+
+# Copiar código compilado do builder
+COPY --from=builder /app/server/dist ./server/dist
+
+# Copiar código do packages/shared (necessário em runtime)
+COPY packages/shared ./packages/shared
 
 # Variáveis de ambiente
 ENV NODE_ENV=production
 ENV PORT=4000
+
+WORKDIR /app/server
 
 # Expor porta
 EXPOSE 4000
