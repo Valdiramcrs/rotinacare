@@ -26,7 +26,7 @@ export function Home() {
             </div>
             
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-              Sua saúde organizada,{' '}
+              Sua saúde organizada,<br />
               <span className="text-blue-600">em um só lugar</span>
             </h1>
             
@@ -44,8 +44,7 @@ export function Home() {
               </Button>
               <Button 
                 size="lg" 
-                variant="outline" 
-                className="border-2 border-dashed border-red-400 text-red-600 hover:bg-red-50"
+                variant="outline"
               >
                 Ver Demonstração
               </Button>
