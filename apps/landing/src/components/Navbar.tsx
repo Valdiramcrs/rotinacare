@@ -17,7 +17,7 @@ export function Navbar() {
           <Button variant="ghost" className="text-gray-700" asChild>
             <a href="https://app.rotinacare.com/login">Entrar</a>
           </Button>
-          <Button className="bg-blue-600 hover:bg-blue-700" asChild>
+          <Button className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
             <a href="https://app.rotinacare.com/register">Começar Agora</a>
           </Button>
         </div>
