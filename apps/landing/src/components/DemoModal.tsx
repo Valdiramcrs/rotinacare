@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState } from 'react';
 
 interface DemoModalProps {
   isOpen: boolean;
@@ -13,44 +13,110 @@ const demoSlides = [
     image: '/demo/frame_001.png',
     features: [
       'Barra de progresso do perfil',
-      'Alertas de saúde em tempo real',
       'Próximas consultas e exames',
-      'Insights personalizados de IA'
-    ]
+      'Alertas de saúde em tempo real',
+      'Insights personalizados de IA',
+    ],
   },
   {
-    title: 'Agenda Inteligente',
-    description: 'Gerencie todas as suas consultas, exames e procedimentos em um calendário completo e integrado.',
-    image: '/demo/frame_002.png',
+    title: 'Dashboard - Insights e Recomendações de IA',
+    description: 'Receba recomendações inteligentes baseadas no seu histórico médico e evolução de indicadores de saúde.',
+    image: '/demo/dashboard_insights.png',
+    features: [
+      'Análise de medicamentos',
+      'Recomendações de exames',
+      'Evolução de indicadores',
+      'Conversar com Assistente IA',
+    ],
+  },
+  {
+    title: 'Agenda - Calendário Completo',
+    description: 'Visualize todas as suas consultas, exames e eventos de saúde em um calendário mensal intuitivo.',
+    image: '/demo/agenda_calendario.png',
     features: [
       'Calendário mensal completo',
       'Integração com Google Calendar',
       'Filtros por tipo de evento',
-      'Criação rápida de novos eventos'
-    ]
+      'Visualização de eventos agendados',
+    ],
   },
   {
-    title: 'Gerenciamento de Diagnósticos',
-    description: 'Registre e acompanhe todos os seus diagnósticos médicos com filtros por período e histórico completo.',
-    image: '/demo/frame_005.png',
+    title: 'Agenda - Detalhes do Evento',
+    description: 'Gerencie detalhes completos de cada evento, incluindo profissional, local e observações.',
+    image: '/demo/agenda_evento.png',
     features: [
-      'Filtros por data personalizados',
-      'Histórico completo de diagnósticos',
-      'Registro profissional vinculado',
-      'Gerenciamento de tags'
-    ]
+      'Informações detalhadas do evento',
+      'Profissional vinculado',
+      'Local e horário',
+      'Observações personalizadas',
+    ],
   },
   {
-    title: 'Cadastro Rápido de Diagnósticos',
-    description: 'Adicione novos diagnósticos de forma simples e rápida, com campos intuitivos e evolução clínica.',
-    image: '/demo/frame_006.png',
+    title: 'Profissionais - Lista Completa',
+    description: 'Mantenha um cadastro organizado de todos os seus médicos e profissionais de saúde.',
+    image: '/demo/profissionais_lista.png',
     features: [
-      'Formulário intuitivo',
-      'Data do diagnóstico',
-      'Evolução clínica detalhada',
-      'Salvamento rápido'
-    ]
-  }
+      'Lista de profissionais cadastrados',
+      'Especialidade e CRM',
+      'Informações de contato',
+      'Localização do consultório',
+    ],
+  },
+  {
+    title: 'Profissionais - Cadastro Rápido',
+    description: 'Adicione novos profissionais de saúde de forma rápida e intuitiva.',
+    image: '/demo/profissionais_novo.png',
+    features: [
+      'Formulário simplificado',
+      'Especialidade e CRM',
+      'Telefone e email',
+      'Cidade e estado',
+    ],
+  },
+  {
+    title: 'Exames - Cadastro com Análise de IA',
+    description: 'Adicione exames e envie PDFs para análise automática com inteligência artificial.',
+    image: '/demo/exames_novo.png',
+    features: [
+      'Upload de PDF do laudo',
+      'Análise automática com IA',
+      'Tipo de exame e data',
+      'Resumo dos achados',
+    ],
+  },
+  {
+    title: 'Exames - Gerenciamento Completo',
+    description: 'Organize todos os seus exames com filtros avançados e comparação de resultados.',
+    image: '/demo/exames_lista.png',
+    features: [
+      'Filtros por período',
+      'Histórico completo de exames',
+      'Comparação de resultados',
+      'Gerenciamento de tags',
+    ],
+  },
+  {
+    title: 'Medicamentos - Lista Organizada',
+    description: 'Acompanhe todos os seus medicamentos ativos e histórico de tratamentos.',
+    image: '/demo/medicamentos_lista.png',
+    features: [
+      'Medicamentos em uso',
+      'Dosagem e frequência',
+      'Histórico de tratamentos',
+      'Alertas de horários',
+    ],
+  },
+  {
+    title: 'Medicamentos - Cadastro Detalhado',
+    description: 'Registre medicamentos com informações completas de dosagem, frequência e duração.',
+    image: '/demo/medicamentos_novo.png',
+    features: [
+      'Nome e dosagem',
+      'Frequência de uso',
+      'Data de início e fim',
+      'Observações médicas',
+    ],
+  },
 ];
 
 export function DemoModal({ isOpen, onClose }: DemoModalProps) {
@@ -59,11 +125,15 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
   if (!isOpen) return null;
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % demoSlides.length);
+    if (currentSlide < demoSlides.length - 1) {
+      setCurrentSlide(currentSlide + 1);
+    }
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + demoSlides.length) % demoSlides.length);
+    if (currentSlide > 0) {
+      setCurrentSlide(currentSlide - 1);
+    }
   };
 
   const goToSlide = (index: number) => {
@@ -86,8 +156,7 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
           </h2>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-            aria-label="Fechar modal"
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
           >
             <X className="w-6 h-6 text-gray-500" />
           </button>
@@ -144,14 +213,14 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
         <div className="flex items-center justify-between p-6 border-t bg-gray-50">
           <button
             onClick={prevSlide}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={currentSlide === 0}
+            className="flex items-center gap-2 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             <ChevronLeft className="w-5 h-5" />
-            <span className="hidden sm:inline">Anterior</span>
+            Anterior
           </button>
 
-          {/* Dots */}
+          {/* Slide Indicators */}
           <div className="flex gap-2">
             {demoSlides.map((_, index) => (
               <button
@@ -169,10 +238,10 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
 
           <button
             onClick={nextSlide}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={currentSlide === demoSlides.length - 1}
+            className="flex items-center gap-2 px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
-            <span className="hidden sm:inline">Próximo</span>
+            Próximo
             <ChevronRight className="w-5 h-5" />
           </button>
         </div>
