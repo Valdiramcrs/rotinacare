@@ -1,5 +1,5 @@
-import { logger } from './logger';
-import { captureMessage } from './sentry';
+import { logger } from './logger.js';
+import { captureMessage } from './sentry.js';
 
 export type AlertSeverity = 'info' | 'warning' | 'error' | 'critical';
 

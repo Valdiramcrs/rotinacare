@@ -1,5 +1,5 @@
-import { db } from './index';
-import { users } from './schema';
+import { db } from './index.js';
+import { users } from './schema.js';
 import { hashPassword } from '../lib/auth';
 
 async function seed() {

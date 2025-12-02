@@ -1,6 +1,6 @@
 import { initTRPC, TRPCError } from '@trpc/server';
 import type { CreateExpressContextOptions } from '@trpc/server/adapters/express';
-import { extractToken, verifyToken } from './lib/auth';
+import { extractToken, verifyToken } from './lib/auth.js';
 
 export const createContext = ({ req, res }: CreateExpressContextOptions) => {
   // Extrair token do header Authorization

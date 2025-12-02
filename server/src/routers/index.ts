@@ -1,8 +1,8 @@
 import { router } from '../trpc';
-import { authRouter } from './auth';
-import { doctorsRouter } from './doctors';
-import { medicationsRouter } from './medications';
-import { adminRouter } from './admin';
+import { authRouter } from './auth.js';
+import { doctorsRouter } from './doctors.js';
+import { medicationsRouter } from './medications.js';
+import { adminRouter } from './admin.js';
 
 export const appRouter = router({
   auth: authRouter,
