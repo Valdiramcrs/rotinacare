@@ -1,4 +1,4 @@
-import { router } from '../trpc';
+import { router } from '../trpc.js';
 import { authRouter } from './auth.js';
 import { doctorsRouter } from './doctors.js';
 import { medicationsRouter } from './medications.js';

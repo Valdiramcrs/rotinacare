@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
-import { router, protectedProcedure } from '../trpc';
+import { router, protectedProcedure } from '../trpc.js';
 import { createDoctorSchema } from '@rotinacare/shared';
-import { db } from '../db';
-import { doctors } from '../db/schema';
+import { db } from '../db/index.js';
+import { doctors } from '../db/schema.js';
 import { eq, and } from 'drizzle-orm';
 import { randomUUID } from 'crypto';
 

@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { router, adminProcedure } from '../trpc';
-import { db } from '../db';
-import { users, doctors, medications, appointments } from '../db/schema';
+import { router, adminProcedure } from '../trpc.js';
+import { db } from '../db/index.js';
+import { users, doctors, medications, appointments } from '../db/schema.js';
 import { sql, count, eq } from 'drizzle-orm';
 
 export const adminRouter = router({

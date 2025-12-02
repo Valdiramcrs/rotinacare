@@ -1,10 +1,10 @@
 import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
-import { router, publicProcedure, protectedProcedure } from '../trpc';
-import { db } from '../db';
-import { users } from '../db/schema';
+import { router, publicProcedure, protectedProcedure } from '../trpc.js';
+import { db } from '../db/index.js';
+import { users } from '../db/schema.js';
 import { eq } from 'drizzle-orm';
-import { generateToken, hashPassword, comparePassword } from '../lib/auth';
+import { generateToken, hashPassword, comparePassword } from '../lib/auth.js';
 import { randomUUID } from 'crypto';
 
 export const authRouter = router({
