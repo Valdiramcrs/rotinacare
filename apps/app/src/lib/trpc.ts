@@ -1,8 +1,8 @@
 import { createTRPCReact } from '@trpc/react-query';
 import { httpBatchLink } from '@trpc/client';
+import type { AppRouter } from '@rotinacare/api-types';
 
-// Usar tipo genérico ao invés de importar AppRouter do servidor
-export const trpc = createTRPCReact<any>();
+export const trpc = createTRPCReact<AppRouter>();
 
 export const trpcClient = trpc.createClient({
   links: [

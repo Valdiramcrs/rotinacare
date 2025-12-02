@@ -8,7 +8,7 @@ export const adminRouter = router({
   /**
    * Stats - estatísticas gerais da plataforma
    */
-  stats: adminProcedure.query(async ({ ctx }) => {
+  stats: adminProcedure.query(async () => {
     // Total de usuários
     const [totalUsersResult] = await db
       .select({ count: count() })
