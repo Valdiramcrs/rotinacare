@@ -18,7 +18,11 @@ RUN pnpm install --frozen-lockfile
 COPY server ./server
 COPY packages/shared ./packages/shared
 
-# Build
+# Build do pacote shared
+WORKDIR /app/packages/shared
+RUN pnpm build
+
+# Build do servidor
 WORKDIR /app/server
 RUN pnpm build
 
@@ -40,9 +44,7 @@ RUN pnpm install --frozen-lockfile --prod
 
 # Copiar código compilado do builder
 COPY --from=builder /app/server/dist ./server/dist
-
-# Copiar código do packages/shared (necessário em runtime)
-COPY packages/shared ./packages/shared
+COPY --from=builder /app/packages/shared/dist ./packages/shared/dist
 
 # Variáveis de ambiente
 ENV NODE_ENV=production
