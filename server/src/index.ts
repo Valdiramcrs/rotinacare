@@ -4,6 +4,7 @@ import cors from 'cors';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { appRouter } from './routers/index.js';
 import { createContext } from './trpc.js';
+import authRoutes from './routes/auth.js';
 
 const app = express();
 
@@ -31,6 +32,9 @@ app.get('/api/health', (req, res) => {
     version: '1.0.0',
   });
 });
+
+// Auth routes (Supabase Auth)
+app.use('/api/auth', authRoutes);
 
 // tRPC middleware
 app.use('/api/trpc', createExpressMiddleware({
