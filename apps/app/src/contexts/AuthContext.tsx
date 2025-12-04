@@ -14,7 +14,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Check for existing session
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('rotinacare_token'); // ✅ Corrigido
     if (token) {
       // TODO: Validate token and fetch user
       setIsLoading(false);
@@ -25,11 +25,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (email: string, password: string) => {
     // TODO: Implement login logic
-    console.log('Login:', email, password);
+    console.log('Login:', email);
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('rotinacare_token'); // ✅ Corrigido
     setUser(null);
   };
 
