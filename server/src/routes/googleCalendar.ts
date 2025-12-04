@@ -22,8 +22,13 @@ const router = Router();
  * Retorna URL para iniciar fluxo OAuth
  */
 router.get('/auth-url', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  console.log('[DEBUG] 1. /auth-url route hit');
+  console.log('[DEBUG] 2. User from middleware:', req.user);
+  
   try {
+    console.log('[DEBUG] 3. Calling getAuthorizationUrl with userId:', req.user!.userId);
     const authUrl = getAuthorizationUrl(req.user!.userId);
+    console.log('[DEBUG] 4. Auth URL generated successfully:', authUrl.substring(0, 50) + '...');
     
     console.log('[Google Calendar] Auth URL generated for user:', req.user!.userId);
     
@@ -32,6 +37,7 @@ router.get('/auth-url', authMiddleware, async (req: AuthenticatedRequest, res: R
       message: 'Redirect user to this URL to authorize Google Calendar access'
     });
   } catch (error: any) {
+    console.error('[DEBUG] 5. Error caught:', error);
     console.error('[Google Calendar] Failed to generate auth URL:', error);
     res.status(500).json({ 
       error: 'Failed to generate authorization URL',
