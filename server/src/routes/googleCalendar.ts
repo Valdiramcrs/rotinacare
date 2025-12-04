@@ -63,20 +63,22 @@ router.get('/callback', async (req: Request, res: Response) => {
   try {
     const { code, state, error: oauthError } = req.query;
     
+    const frontendUrl = process.env.FRONTEND_URL || 'https://app.rotinacare.com';
+    
     // Google pode retornar erro se usuário negou acesso
     if (oauthError) {
       console.error('[Google Calendar] OAuth error:', oauthError);
-      return res.redirect('https://app.rotinacare.com/calendar?error=access_denied');
+      return res.redirect(`${frontendUrl}/settings?error=access_denied`);
     }
     
     if (!code || typeof code !== 'string') {
       console.error('[Google Calendar] Missing authorization code');
-      return res.redirect('https://app.rotinacare.com/calendar?error=missing_code');
+      return res.redirect(`${frontendUrl}/settings?error=missing_code`);
     }
     
     if (!state || typeof state !== 'string') {
       console.error('[Google Calendar] Missing state parameter');
-      return res.redirect('https://app.rotinacare.com/calendar?error=missing_state');
+      return res.redirect(`${frontendUrl}/settings?error=missing_state`);
     }
     
     const userId = state;
@@ -88,10 +90,10 @@ router.get('/callback', async (req: Request, res: Response) => {
     console.log('[Google Calendar] Successfully connected for user:', userId);
     
     // Redirecionar para o app com sucesso
-    res.redirect('https://app.rotinacare.com/calendar?connected=true');
+    res.redirect(`${frontendUrl}/settings?connected=true`);
   } catch (error: any) {
     console.error('[Google Calendar] OAuth callback error:', error);
-    res.redirect(`https://app.rotinacare.com/calendar?error=auth_failed&message=${encodeURIComponent(error.message)}`);
+    res.redirect(`${frontendUrl}/settings?error=auth_failed&message=${encodeURIComponent(error.message)}`);
   }
 });
 
