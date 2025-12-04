@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { trpc, trpcClient } from './lib/trpc';
-import { Route, Switch, useLocation } from 'wouter';
+import { Route, Switch } from 'wouter';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AppLayout } from './layouts/AppLayout';
 import { Dashboard } from './pages/Dashboard';
@@ -11,8 +11,7 @@ import { Appointments } from './pages/Appointments';
 import { Settings } from './pages/Settings';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
-import { useAuth } from './hooks/useAuth';
-import { useEffect } from 'react';
+
 
 const queryClient = new QueryClient({
   defaultOptions: {

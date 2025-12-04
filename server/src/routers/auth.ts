@@ -4,7 +4,7 @@ import { router, publicProcedure, protectedProcedure } from '../trpc.js';
 import { db } from '../db/index.js';
 import { users } from '../db/schema.js';
 import { eq } from 'drizzle-orm';
-import { generateToken, hashPassword, comparePassword, TokenPayload } from '../lib/auth.js';
+import { generateToken, hashPassword, comparePassword } from '../lib/auth.js';
 import { randomUUID } from 'crypto';
 
 export const authRouter = router({

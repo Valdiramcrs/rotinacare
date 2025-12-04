@@ -7,7 +7,7 @@ interface User {
   email: string;
   name: string;
   role: string;
-  avatarUrl?: string;
+  avatarUrl?: string | null;
 }
 
 interface AuthState {
@@ -22,7 +22,7 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       token: null,
       user: null,
       isAuthenticated: false,
@@ -112,12 +112,13 @@ export function useAuth() {
   const meQuery = trpc.auth.me.useQuery(undefined, {
     enabled: !!token && isAuthenticated,
     retry: false,
-    onError: () => {
-      console.log('[useAuth] Query auth.me falhou, fazendo logout');
-      // Token inválido, fazer logout
-      logout();
-    },
   });
+  
+  // Se query falhar, fazer logout
+  if (meQuery.isError && isAuthenticated) {
+    console.log('[useAuth] Query auth.me falhou, fazendo logout');
+    logout();
+  }
   
   return {
     token,
