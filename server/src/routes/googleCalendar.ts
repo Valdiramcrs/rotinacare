@@ -18,6 +18,15 @@ const router = Router();
 // ============================================
 
 /**
+ * GET /api/google-calendar/test
+ * Rota de teste sem middleware
+ */
+router.get('/test', async (req: Request, res: Response) => {
+  console.log('[DEBUG] Test route hit');
+  res.json({ message: 'Test OK', timestamp: new Date().toISOString() });
+});
+
+/**
  * GET /api/google-calendar/auth-url
  * Retorna URL para iniciar fluxo OAuth
  */
