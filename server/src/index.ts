@@ -9,6 +9,9 @@ import { createContext } from './trpc.js';
 import googleCalendarRoutes from './routes/googleCalendar.js';
 import emailRoutes from './routes/email.js';
 import cronRoutes from './routes/cron.js';
+import { authMiddleware, AuthenticatedRequest } from './middleware/auth.js';
+import { getAuthorizationUrl } from './services/googleCalendar.js';
+import { Response } from 'express';
 
 const app = express();
 
@@ -41,7 +44,26 @@ app.get('/api/health', (req, res) => {
 // Auth agora é feito via tRPC: /api/trpc/auth.login e /api/trpc/auth.register
 // app.use('/api/auth', authRoutes);
 
-// Google Calendar routes
+// Google Calendar auth-url route (direct registration to avoid timeout)
+app.get('/api/google-calendar/auth-url', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    console.log('[Google Calendar] Direct route: Generating auth URL for user:', req.user!.userId);
+    const authUrl = getAuthorizationUrl(req.user!.userId);
+    console.log('[Google Calendar] Direct route: Auth URL generated successfully');
+    return res.json({ 
+      url: authUrl,
+      message: 'Redirect user to this URL to authorize Google Calendar access'
+    });
+  } catch (error: any) {
+    console.error('[Google Calendar] Direct route: Failed to generate auth URL:', error);
+    return res.status(500).json({ 
+      error: 'Failed to generate authorization URL',
+      details: error.message
+    });
+  }
+});
+
+// Google Calendar routes (other routes)
 app.use('/api/google-calendar', googleCalendarRoutes);
 
 // Email routes
