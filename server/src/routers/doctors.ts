@@ -15,7 +15,7 @@ export const doctorsRouter = router({
     const doctorsList = await db
       .select()
       .from(doctors)
-      .where(eq(doctors.userId, ctx.user.id))
+      .where(eq(doctors.userId, ctx.user.userId))
       .orderBy(doctors.createdAt);
 
     return doctorsList;
@@ -33,7 +33,7 @@ export const doctorsRouter = router({
         .where(
           and(
             eq(doctors.id, input.id),
-            eq(doctors.userId, ctx.user.id)
+            eq(doctors.userId, ctx.user.userId)
           )
         )
         .limit(1);
@@ -59,7 +59,7 @@ export const doctorsRouter = router({
 
       await db.insert(doctors).values({
         id: doctorId,
-        userId: ctx.user.id,
+        userId: ctx.user.userId,
         name: input.name,
         specialty: input.specialty,
         crm: input.crm,
@@ -73,7 +73,7 @@ export const doctorsRouter = router({
 
       return {
         id: doctorId,
-        userId: ctx.user.id,
+        userId: ctx.user.userId,
         ...input,
         createdAt: now,
         updatedAt: now,
@@ -98,7 +98,7 @@ export const doctorsRouter = router({
         .where(
           and(
             eq(doctors.id, input.id),
-            eq(doctors.userId, ctx.user.id)
+            eq(doctors.userId, ctx.user.userId)
           )
         )
         .limit(1);
@@ -135,7 +135,7 @@ export const doctorsRouter = router({
         .where(
           and(
             eq(doctors.id, input.id),
-            eq(doctors.userId, ctx.user.id)
+            eq(doctors.userId, ctx.user.userId)
           )
         )
         .limit(1);
