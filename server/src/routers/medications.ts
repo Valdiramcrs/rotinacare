@@ -15,7 +15,7 @@ export const medicationsRouter = router({
     const medicationsList = await db
       .select()
       .from(medications)
-      .where(eq(medications.userId, ctx.userId))
+      .where(eq(medications.userId, ctx.user.id))
       .orderBy(medications.startDate);
 
     return medicationsList;
@@ -33,7 +33,7 @@ export const medicationsRouter = router({
         .where(
           and(
             eq(medications.id, input.id),
-            eq(medications.userId, ctx.userId)
+            eq(medications.userId, ctx.user.id)
           )
         )
         .limit(1);
@@ -59,7 +59,7 @@ export const medicationsRouter = router({
 
       await db.insert(medications).values({
         id: medicationId,
-        userId: ctx.userId,
+        userId: ctx.user.id,
         name: input.name,
         dosage: input.dosage,
         frequency: input.frequency,
@@ -72,7 +72,7 @@ export const medicationsRouter = router({
 
       return {
         id: medicationId,
-        userId: ctx.userId,
+        userId: ctx.user.id,
         ...input,
         createdAt: now,
         updatedAt: now,
@@ -97,7 +97,7 @@ export const medicationsRouter = router({
         .where(
           and(
             eq(medications.id, input.id),
-            eq(medications.userId, ctx.userId)
+            eq(medications.userId, ctx.user.id)
           )
         )
         .limit(1);
@@ -134,7 +134,7 @@ export const medicationsRouter = router({
         .where(
           and(
             eq(medications.id, input.id),
-            eq(medications.userId, ctx.userId)
+            eq(medications.userId, ctx.user.id)
           )
         )
         .limit(1);
@@ -161,7 +161,7 @@ export const medicationsRouter = router({
     const activeMedications = await db
       .select()
       .from(medications)
-      .where(eq(medications.userId, ctx.userId))
+      .where(eq(medications.userId, ctx.user.id))
       .orderBy(medications.startDate);
 
     // Filtrar medicamentos ativos no código (sem endDate ou endDate > now)
