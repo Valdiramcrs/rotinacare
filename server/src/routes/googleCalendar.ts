@@ -60,10 +60,11 @@ router.get('/auth-url', authMiddleware, async (req: AuthenticatedRequest, res: R
  * Callback do OAuth - recebe código do Google após autorização
  */
 router.get('/callback', async (req: Request, res: Response) => {
+  const frontendUrl = process.env.FRONTEND_URL || 'https://app.rotinacare.com';
+  
   try {
     const { code, state, error: oauthError } = req.query;
     
-    const frontendUrl = process.env.FRONTEND_URL || 'https://app.rotinacare.com';
     
     // Google pode retornar erro se usuário negou acesso
     if (oauthError) {
