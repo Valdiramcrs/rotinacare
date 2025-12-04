@@ -23,9 +23,9 @@ const router = Router();
  */
 router.get('/auth-url', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const authUrl = getAuthorizationUrl(req.user!.id);
+    const authUrl = getAuthorizationUrl(req.user!.userId);
     
-    console.log('[Google Calendar] Auth URL generated for user:', req.user!.id);
+    console.log('[Google Calendar] Auth URL generated for user:', req.user!.userId);
     
     res.json({ 
       url: authUrl,
@@ -90,8 +90,8 @@ router.get('/callback', async (req: Request, res: Response) => {
  */
 router.get('/status', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const connected = await isConnected(req.user!.id);
-    const connectionInfo = connected ? await getConnectionInfo(req.user!.id) : null;
+    const connected = await isConnected(req.user!.userId);
+    const connectionInfo = connected ? await getConnectionInfo(req.user!.userId) : null;
     
     res.json({ 
       connected,
@@ -109,9 +109,9 @@ router.get('/status', authMiddleware, async (req: AuthenticatedRequest, res: Res
  */
 router.post('/disconnect', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
   try {
-    await disconnect(req.user!.id);
+    await disconnect(req.user!.userId);
     
-    console.log('[Google Calendar] Disconnected for user:', req.user!.id);
+    console.log('[Google Calendar] Disconnected for user:', req.user!.userId);
     
     res.json({ 
       success: true,
@@ -133,7 +133,7 @@ router.post('/disconnect', authMiddleware, async (req: AuthenticatedRequest, res
  */
 router.get('/calendars', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const calendars = await listUserCalendars(req.user!.id);
+    const calendars = await listUserCalendars(req.user!.userId);
     
     res.json({ 
       calendars,
@@ -175,7 +175,7 @@ router.post('/sync/:eventId', authMiddleware, async (req: AuthenticatedRequest, 
     console.log('[Google Calendar] Syncing event:', eventId, 'to calendar:', calendarId || 'primary');
     
     const result = await syncEventToGoogle(
-      req.user!.id,
+      req.user!.userId,
       eventId,
       calendarId || 'primary'
     );
@@ -222,7 +222,7 @@ router.delete('/event/:googleEventId', authMiddleware, async (req: Authenticated
     }
     
     await deleteEventFromGoogle(
-      req.user!.id,
+      req.user!.userId,
       googleEventId,
       (calendarId as string) || 'primary'
     );
