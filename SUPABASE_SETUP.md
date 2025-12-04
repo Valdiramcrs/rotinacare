@@ -1,4 +1,4 @@
-# Configuração do Supabase - RotinasCare
+# Configuração do Supabase - RotinaCare
 
 Guia completo para configurar o banco de dados PostgreSQL com Supabase.
 

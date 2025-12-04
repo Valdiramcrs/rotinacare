@@ -16,7 +16,7 @@ export function Login() {
     <div className="min-h-screen flex items-center justify-center bg-muted/50">
       <div className="w-full max-w-md p-4">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-primary mb-2">RotinasCare Admin</h1>
+          <h1 className="text-3xl font-bold text-primary mb-2">RotinaCare Admin</h1>
           <p className="text-muted-foreground">Painel Administrativo</p>
         </div>
 

@@ -1,55 +1,55 @@
 import { initTRPC, TRPCError } from '@trpc/server';
 import type { CreateExpressContextOptions } from '@trpc/server/adapters/express';
-import { extractToken, verifyToken } from './lib/auth.js';
+import { verifyToken, TokenPayload } from './lib/auth.js';
 
-export const createContext = ({ req, res }: CreateExpressContextOptions) => {
-  // Extrair token do header Authorization
-  const authHeader = req.headers.authorization || '';
-  const token = extractToken(authHeader);
+export interface Context {
+  user: TokenPayload | null;
+}
+
+export const createContext = ({ req }: CreateExpressContextOptions): Context => {
+  const authHeader = req.headers.authorization;
   
-  // Verificar e decodificar token
-  const user = token ? verifyToken(token) : null;
+  if (!authHeader?.startsWith('Bearer ')) {
+    return { user: null };
+  }
   
-  return {
-    req,
-    res,
-    token,
-    user,
-    userId: user?.userId || null,
-  };
+  const token = authHeader.substring(7);
+  
+  try {
+    const user = verifyToken(token);
+    return { user };
+  } catch {
+    return { user: null };
+  }
 };
-
-export type Context = Awaited<ReturnType<typeof createContext>>;
 
 const t = initTRPC.context<Context>().create();
 
 export const router = t.router;
 export const publicProcedure = t.procedure;
 
-// Procedure protegido - requer autenticação
 export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
-  if (!ctx.user || !ctx.userId) {
+  if (!ctx.user) {
     throw new TRPCError({
       code: 'UNAUTHORIZED',
-      message: 'Você precisa estar autenticado para acessar este recurso',
+      message: 'Você precisa estar logado para acessar este recurso',
     });
   }
   
   return next({
     ctx: {
       ...ctx,
-      user: ctx.user,
-      userId: ctx.userId,
+      user: ctx.user, // Agora garantidamente não é null
     },
   });
 });
 
 // Procedure admin - requer autenticação e role admin
 export const adminProcedure = t.procedure.use(async ({ ctx, next }) => {
-  if (!ctx.user || !ctx.userId) {
+  if (!ctx.user) {
     throw new TRPCError({
       code: 'UNAUTHORIZED',
-      message: 'Você precisa estar autenticado para acessar este recurso',
+      message: 'Você precisa estar logado para acessar este recurso',
     });
   }
   
@@ -64,7 +64,6 @@ export const adminProcedure = t.procedure.use(async ({ ctx, next }) => {
     ctx: {
       ...ctx,
       user: ctx.user,
-      userId: ctx.userId,
     },
   });
 });

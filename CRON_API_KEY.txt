@@ -1,0 +1,10 @@
+CRON_API_KEY=cc57afa640b0428b7e5018078ba691a330976790da954056b808facbc11ae925
+
+Esta é a chave secreta para autenticar o cron job.
+
+Configure no Railway:
+railway variables set CRON_API_KEY="cc57afa640b0428b7e5018078ba691a330976790da954056b808facbc11ae925"
+
+Use no cron-job.org:
+Header: x-api-key
+Value: cc57afa640b0428b7e5018078ba691a330976790da954056b808facbc11ae925

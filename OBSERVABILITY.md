@@ -1,6 +1,6 @@
-# Guia de Observabilidade - RotinasCare
+# Guia de Observabilidade - RotinaCare
 
-Este documento descreve o sistema completo de observabilidade implementado na plataforma RotinasCare, incluindo logging, monitoring, error tracking e alertas.
+Este documento descreve o sistema completo de observabilidade implementado na plataforma RotinaCare, incluindo logging, monitoring, error tracking e alertas.
 
 ## 📊 Visão Geral
 

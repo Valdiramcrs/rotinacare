@@ -1,4 +1,4 @@
-# 🚀 Instruções Finais de Deploy - RotinasCare
+# 🚀 Instruções Finais de Deploy - RotinaCare
 
 ## 📊 STATUS ATUAL
 
@@ -47,7 +47,7 @@
 NODE_ENV=production
 PORT=4000
 DATABASE_URL=postgresql://postgres.pcthuczsisjnnettogln:123Mud@r@aws-0-us-west-2.pooler.supabase.com:6543/postgres
-JWT_SECRET=RotinasCare2025SecretKeyMuitoSegura32chars
+JWT_SECRET=RotinaCare2025SecretKeyMuitoSegura32chars
 CORS_ORIGINS=https://rotinacare.com,https://app.rotinacare.com,https://admin.rotinacare.com
 ```
 

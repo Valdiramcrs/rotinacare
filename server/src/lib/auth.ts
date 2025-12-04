@@ -1,19 +1,19 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
-const JWT_EXPIRES_IN = '7d';
+const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-in-production';
+const JWT_EXPIRES_IN = '30d'; // 30 dias para SSO entre módulos
 
-export interface JWTPayload {
+export interface TokenPayload {
   userId: string;
   email: string;
-  role: 'patient' | 'admin';
+  role: 'patient' | 'admin' | 'professional';
 }
 
 /**
  * Gera um token JWT para o usuário
  */
-export function generateToken(payload: JWTPayload): string {
+export function generateToken(payload: TokenPayload): string {
   return jwt.sign(payload, JWT_SECRET, {
     expiresIn: JWT_EXPIRES_IN,
   });
@@ -21,13 +21,13 @@ export function generateToken(payload: JWTPayload): string {
 
 /**
  * Verifica e decodifica um token JWT
+ * Lança erro se o token for inválido ou expirado
  */
-export function verifyToken(token: string): JWTPayload | null {
+export function verifyToken(token: string): TokenPayload {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as JWTPayload;
-    return decoded;
+    return jwt.verify(token, JWT_SECRET) as TokenPayload;
   } catch (error) {
-    return null;
+    throw new Error('Token inválido ou expirado');
   }
 }
 
@@ -35,8 +35,7 @@ export function verifyToken(token: string): JWTPayload | null {
  * Gera hash de senha usando bcrypt
  */
 export async function hashPassword(password: string): Promise<string> {
-  const salt = await bcrypt.genSalt(10);
-  return bcrypt.hash(password, salt);
+  return bcrypt.hash(password, 12);
 }
 
 /**

@@ -1,4 +1,4 @@
-# 📊 Status Completo do Deploy - RotinasCare
+# 📊 Status Completo do Deploy - RotinaCare
 
 **Data:** 01/12/2025  
 **Duração total:** ~2 horas  

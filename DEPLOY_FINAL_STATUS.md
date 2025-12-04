@@ -1,4 +1,4 @@
-# 📊 Status Final do Deploy - RotinasCare
+# 📊 Status Final do Deploy - RotinaCare
 
 **Data:** 01/12/2025  
 **Duração total:** ~2 horas
@@ -344,7 +344,7 @@ Para dúvidas ou problemas:
 
 ---
 
-**Projeto:** RotinasCare  
+**Projeto:** RotinaCare  
 **Versão:** 1.0.0  
 **Status:** 50% Deploy Completo  
 **Próximo milestone:** 100% Deploy + Domínios configurados

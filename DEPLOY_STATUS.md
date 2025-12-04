@@ -1,4 +1,4 @@
-# Status do Deploy - RotinasCare
+# Status do Deploy - RotinaCare
 
 **Data:** 01/12/2025  
 **Projeto:** github.com/Valdiramcrs/rotinacare

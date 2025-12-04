@@ -19,7 +19,7 @@ export function Settings() {
               <label htmlFor="platform-name" className="block text-sm font-medium mb-2">
                 Nome da Plataforma
               </label>
-              <Input id="platform-name" defaultValue="RotinasCare" />
+              <Input id="platform-name" defaultValue="RotinaCare" />
             </div>
             <div>
               <label htmlFor="support-email" className="block text-sm font-medium mb-2">

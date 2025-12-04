@@ -1,22 +1,31 @@
-import { useAuth } from '../contexts/AuthContext';
-import { Redirect } from 'wouter';
+import { useEffect } from 'react';
+import { useLocation } from 'wouter';
+import { useAuth } from '../hooks/useAuth';
 
-export function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, isLoading } = useAuth();
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+}
+
+export function ProtectedRoute({ children }: ProtectedRouteProps) {
+  const [, setLocation] = useLocation();
+  const { isAuthenticated, isLoading, token } = useAuth();
+
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated && !token) {
+      setLocation('/login');
+    }
+  }, [isAuthenticated, isLoading, token, setLocation]);
 
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Carregando...</p>
-        </div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
       </div>
     );
   }
 
-  if (!isAuthenticated) {
-    return <Redirect to="/login" />;
+  if (!isAuthenticated && !token) {
+    return null;
   }
 
   return <>{children}</>;

@@ -1,4 +1,4 @@
-# Credenciais de Deploy - RotinasCare
+# Credenciais de Deploy - RotinaCare
 
 ## Supabase (Banco de Dados)
 

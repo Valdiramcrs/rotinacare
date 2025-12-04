@@ -4,7 +4,7 @@ import { router, publicProcedure, protectedProcedure } from '../trpc.js';
 import { db } from '../db/index.js';
 import { users } from '../db/schema.js';
 import { eq } from 'drizzle-orm';
-import { generateToken, hashPassword, comparePassword } from '../lib/auth.js';
+import { generateToken, hashPassword, comparePassword, TokenPayload } from '../lib/auth.js';
 import { randomUUID } from 'crypto';
 
 export const authRouter = router({
@@ -47,7 +47,7 @@ export const authRouter = router({
       const token = generateToken({
         userId: user.id,
         email: user.email,
-        role: user.role as 'patient' | 'admin',
+        role: user.role as 'patient' | 'admin' | 'professional',
       });
 
       return {
@@ -138,7 +138,7 @@ export const authRouter = router({
         createdAt: users.createdAt,
       })
       .from(users)
-      .where(eq(users.id, ctx.userId))
+      .where(eq(users.id, ctx.user.userId))
       .limit(1);
 
     if (!user) {
@@ -168,7 +168,7 @@ export const authRouter = router({
           ...input,
           updatedAt: new Date(),
         })
-        .where(eq(users.id, ctx.userId));
+        .where(eq(users.id, ctx.user.userId));
 
       return { success: true };
     }),
@@ -188,7 +188,7 @@ export const authRouter = router({
       const [user] = await db
         .select()
         .from(users)
-        .where(eq(users.id, ctx.userId))
+        .where(eq(users.id, ctx.user.userId))
         .limit(1);
 
       if (!user) {
@@ -221,7 +221,7 @@ export const authRouter = router({
           password: hashedPassword,
           updatedAt: new Date(),
         })
-        .where(eq(users.id, ctx.userId));
+        .where(eq(users.id, ctx.user.userId));
 
       return { success: true };
     }),

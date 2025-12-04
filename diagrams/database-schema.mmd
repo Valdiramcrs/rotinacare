@@ -1,0 +1,70 @@
+erDiagram
+    users ||--o{ doctors : "has many"
+    users ||--o{ medications : "has many"
+    users ||--o{ exams : "has many"
+    users ||--o{ appointments : "has many"
+
+    users {
+        uuid id PK
+        string email UK
+        string password_hash
+        string name
+        string role
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    doctors {
+        uuid id PK
+        uuid user_id FK
+        string name
+        string specialty
+        string crm
+        string phone
+        string email
+        string address
+        text notes
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    medications {
+        uuid id PK
+        uuid user_id FK
+        string name
+        string dosage
+        string frequency
+        string schedule
+        date start_date
+        date end_date
+        text notes
+        boolean active
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    exams {
+        uuid id PK
+        uuid user_id FK
+        string name
+        string type
+        date exam_date
+        string result
+        string file_url
+        uuid doctor_id FK
+        text notes
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    appointments {
+        uuid id PK
+        uuid user_id FK
+        uuid doctor_id FK
+        datetime appointment_date
+        string status
+        string reason
+        text notes
+        timestamp created_at
+        timestamp updated_at
+    }

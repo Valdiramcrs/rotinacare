@@ -1,10 +1,10 @@
-# Guia de Deploy - RotinasCare
+# Guia de Deploy - RotinaCare
 
-Este guia descreve como fazer o deploy completo da plataforma RotinasCare.
+Este guia descreve como fazer o deploy completo da plataforma RotinaCare.
 
 ## Visão Geral
 
-A plataforma RotinasCare é composta por:
+A plataforma RotinaCare é composta por:
 
 - **3 aplicações frontend** (Landing, App, Admin) → Deploy no Vercel
 - **1 backend** (Server) → Deploy no Railway ou similar

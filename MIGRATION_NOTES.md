@@ -2,7 +2,7 @@
 
 ## 📋 Resumo
 
-O projeto RotinasCare foi migrado de **MySQL** para **PostgreSQL** usando **Supabase** como banco gerenciado.
+O projeto RotinaCare foi migrado de **MySQL** para **PostgreSQL** usando **Supabase** como banco gerenciado.
 
 **Data da migração:** 2025-12-01  
 **Versão:** 2.1.0

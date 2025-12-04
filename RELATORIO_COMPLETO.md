@@ -1,4 +1,4 @@
-# 📋 RELATÓRIO COMPLETO - Projeto RotinasCare
+# 📋 RELATÓRIO COMPLETO - Projeto RotinaCare
 
 **Cliente:** Valdiramcrs  
 **Data:** 01 de Dezembro de 2025  
@@ -24,7 +24,7 @@
 
 ### O que foi solicitado
 
-Criar um **monorepo completo** para o projeto RotinasCare contendo:
+Criar um **monorepo completo** para o projeto RotinaCare contendo:
 - 3 aplicações frontend independentes (Landing, App, Admin)
 - 1 backend compartilhado (Express + tRPC)
 - Pacotes compartilhados (UI, Shared, Tailwind Config)
@@ -1439,7 +1439,7 @@ railway up            # Deploy backend
 
 ## 🎉 CONCLUSÃO
 
-O projeto **RotinasCare** foi desenvolvido com sucesso até 75% de conclusão. Toda a infraestrutura de código, banco de dados, autenticação, testes, observabilidade e documentação está **100% funcional**.
+O projeto **RotinaCare** foi desenvolvido com sucesso até 75% de conclusão. Toda a infraestrutura de código, banco de dados, autenticação, testes, observabilidade e documentação está **100% funcional**.
 
 ### Resumo do que foi entregue:
 
@@ -1468,7 +1468,7 @@ O projeto **RotinasCare** foi desenvolvido com sucesso até 75% de conclusão. T
 
 **Desenvolvedor:** Manus AI  
 **Cliente:** Valdiramcrs  
-**Projeto:** RotinasCare  
+**Projeto:** RotinaCare  
 **Data:** 01/12/2025  
 **Versão:** 1.0.0
 

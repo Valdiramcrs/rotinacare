@@ -1,0 +1,47 @@
+graph TB
+    subgraph "Frontend - Vercel"
+        Landing["Landing Page<br/>apps/landing<br/>React + Vite"]
+        App["App Principal<br/>apps/app<br/>React + Vite"]
+        Admin["Painel Admin<br/>apps/admin<br/>React + Vite"]
+    end
+
+    subgraph "Backend - Railway"
+        API["API Server<br/>Node.js + Express<br/>tRPC"]
+        Auth["Autenticação<br/>JWT"]
+        Routers["Routers<br/>doctors, medications,<br/>exams, appointments"]
+    end
+
+    subgraph "Banco de Dados - Supabase"
+        DB["PostgreSQL<br/>Drizzle ORM"]
+        Tables["Tabelas:<br/>users, doctors,<br/>medications, exams,<br/>appointments"]
+    end
+
+    subgraph "Pacotes Compartilhados"
+        Shared["@rotinacare/shared<br/>Types + Schemas + Utils"]
+        UI["@rotinacare/ui<br/>Componentes React"]
+    end
+
+    Landing -->|tRPC Client| API
+    App -->|tRPC Client| API
+    Admin -->|tRPC Client| API
+
+    API --> Auth
+    API --> Routers
+    Routers --> DB
+    DB --> Tables
+
+    Landing -.->|Usa| Shared
+    App -.->|Usa| Shared
+    Admin -.->|Usa| Shared
+    API -.->|Usa| Shared
+
+    App -.->|Usa| UI
+    Admin -.->|Usa| UI
+
+    style Landing fill:#e1f5ff
+    style App fill:#e1f5ff
+    style Admin fill:#e1f5ff
+    style API fill:#ffe1e1
+    style DB fill:#e1ffe1
+    style Shared fill:#fff4e1
+    style UI fill:#fff4e1

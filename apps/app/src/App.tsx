@@ -1,7 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { trpc, trpcClient } from './lib/trpc';
-import { Route, Switch } from 'wouter';
-import { AuthProvider } from './contexts/AuthContext';
+import { Route, Switch, useLocation } from 'wouter';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AppLayout } from './layouts/AppLayout';
 import { Dashboard } from './pages/Dashboard';
@@ -10,31 +9,92 @@ import { Medications } from './pages/Medications';
 import { Exams } from './pages/Exams';
 import { Appointments } from './pages/Appointments';
 import { Settings } from './pages/Settings';
-import { Login } from './pages/Login';
+import LoginPage from './pages/Login';
+import RegisterPage from './pages/Register';
+import { useAuth } from './hooks/useAuth';
+import { useEffect } from 'react';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
+function AppRoutes() {
+  return (
+    <Switch>
+      {/* Rotas públicas */}
+      <Route path="/login" component={LoginPage} />
+      <Route path="/register" component={RegisterPage} />
+      
+      {/* Rotas protegidas */}
+      <Route path="/">
+        <ProtectedRoute>
+          <AppLayout>
+            <Dashboard />
+          </AppLayout>
+        </ProtectedRoute>
+      </Route>
+      
+      <Route path="/dashboard">
+        <ProtectedRoute>
+          <AppLayout>
+            <Dashboard />
+          </AppLayout>
+        </ProtectedRoute>
+      </Route>
+      
+      <Route path="/doctors">
+        <ProtectedRoute>
+          <AppLayout>
+            <Doctors />
+          </AppLayout>
+        </ProtectedRoute>
+      </Route>
+      
+      <Route path="/medications">
+        <ProtectedRoute>
+          <AppLayout>
+            <Medications />
+          </AppLayout>
+        </ProtectedRoute>
+      </Route>
+      
+      <Route path="/exams">
+        <ProtectedRoute>
+          <AppLayout>
+            <Exams />
+          </AppLayout>
+        </ProtectedRoute>
+      </Route>
+      
+      <Route path="/appointments">
+        <ProtectedRoute>
+          <AppLayout>
+            <Appointments />
+          </AppLayout>
+        </ProtectedRoute>
+      </Route>
+      
+      <Route path="/settings">
+        <ProtectedRoute>
+          <AppLayout>
+            <Settings />
+          </AppLayout>
+        </ProtectedRoute>
+      </Route>
+    </Switch>
+  );
+}
 
 export default function App() {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <Switch>
-            <Route path="/login" component={Login} />
-            <ProtectedRoute>
-              <AppLayout>
-                <Switch>
-                  <Route path="/" component={Dashboard} />
-                  <Route path="/doctors" component={Doctors} />
-                  <Route path="/medications" component={Medications} />
-                  <Route path="/exams" component={Exams} />
-                  <Route path="/appointments" component={Appointments} />
-                  <Route path="/settings" component={Settings} />
-                </Switch>
-              </AppLayout>
-            </ProtectedRoute>
-          </Switch>
-        </AuthProvider>
+        <AppRoutes />
       </QueryClientProvider>
     </trpc.Provider>
   );

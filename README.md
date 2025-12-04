@@ -1,4 +1,4 @@
-# RotinasCare
+# RotinaCare
 
 > Plataforma completa para gestão de saúde pessoal com monorepo moderno
 
@@ -7,7 +7,7 @@
 
 ## 🎯 Sobre o Projeto
 
-RotinasCare é uma plataforma web completa para gestão de saúde pessoal, permitindo que usuários organizem informações médicas, medicamentos, exames e consultas em um único lugar.
+RotinaCare é uma plataforma web completa para gestão de saúde pessoal, permitindo que usuários organizem informações médicas, medicamentos, exames e consultas em um único lugar.
 
 ### ✨ Funcionalidades
 

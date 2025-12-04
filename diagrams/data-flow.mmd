@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant User as Usuário
+    participant Frontend as Frontend<br/>(React)
+    participant tRPC as tRPC Client
+    participant API as API Server<br/>(Express + tRPC)
+    participant Auth as Middleware<br/>Autenticação
+    participant Router as Router<br/>(doctors, medications, etc)
+    participant DB as PostgreSQL<br/>(Drizzle ORM)
+
+    User->>Frontend: Ação (ex: Listar médicos)
+    Frontend->>tRPC: Chama query/mutation
+    tRPC->>API: HTTP POST /api/trpc
+    API->>Auth: Valida JWT Token
+    Auth-->>API: Token válido
+    API->>Router: Executa procedimento
+    Router->>DB: Query SQL
+    DB-->>Router: Retorna dados
+    Router-->>API: Retorna resultado
+    API-->>tRPC: Resposta JSON
+    tRPC-->>Frontend: Dados tipados
+    Frontend-->>User: Exibe resultado
+
+    Note over tRPC,API: Type-safe end-to-end<br/>Sem necessidade de gerar schemas

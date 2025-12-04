@@ -100,3 +100,47 @@ export type NewExam = typeof exams.$inferInsert;
 
 export type Appointment = typeof appointments.$inferSelect;
 export type NewAppointment = typeof appointments.$inferInsert;
+
+/**
+ * Google Calendar Tokens table
+ * Armazena tokens OAuth do Google Calendar por usuário
+ */
+export const googleCalendarTokens = pgTable('google_calendar_tokens', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  accessToken: text('access_token').notNull(),
+  refreshToken: text('refresh_token').notNull(),
+  tokenType: varchar('token_type', { length: 50 }).default('Bearer'),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+  scope: text('scope'),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+/**
+ * Events table
+ * Eventos dos usuários com integração opcional ao Google Calendar
+ */
+export const events = pgTable('events', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  title: varchar('title', { length: 255 }).notNull(),
+  description: text('description'),
+  startTime: timestamp('start_time', { withTimezone: true }).notNull(),
+  endTime: timestamp('end_time', { withTimezone: true }),
+  location: text('location'),
+  eventType: varchar('event_type', { length: 50 }),
+  googleCalendarEventId: text('google_calendar_event_id'),
+  googleCalendarId: text('google_calendar_id').default('primary'),
+  videoConferenceLink: text('video_conference_link'),
+  reminderSent: boolean('reminder_sent').default(false),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+// Export types for Google Calendar
+export type GoogleCalendarToken = typeof googleCalendarTokens.$inferSelect;
+export type NewGoogleCalendarToken = typeof googleCalendarTokens.$inferInsert;
+
+export type Event = typeof events.$inferSelect;
+export type NewEvent = typeof events.$inferInsert;

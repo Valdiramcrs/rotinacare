@@ -1,0 +1,385 @@
+import { google } from 'googleapis';
+import { supabase } from '../lib/supabase';
+
+// ============================================
+// CONFIGURAÇÃO
+// ============================================
+
+function getRedirectUri(): string {
+  // Se explicitamente definido, usar
+  if (process.env.GOOGLE_CALENDAR_REDIRECT_URI) {
+    return process.env.GOOGLE_CALENDAR_REDIRECT_URI;
+  }
+  
+  // Em produção, usar domínio da API
+  if (process.env.NODE_ENV === 'production') {
+    return 'https://api.rotinacare.com/api/google-calendar/callback';
+  }
+  
+  // Desenvolvimento
+  return 'http://localhost:3001/api/google-calendar/callback';
+}
+
+function getGoogleCalendarConfig() {
+  const clientId = process.env.GOOGLE_CALENDAR_CLIENT_ID;
+  const clientSecret = process.env.GOOGLE_CALENDAR_CLIENT_SECRET;
+  const redirectUri = getRedirectUri();
+  
+  if (!clientId || !clientSecret) {
+    console.error('[Google Calendar] Missing credentials:', {
+      hasClientId: !!clientId,
+      hasClientSecret: !!clientSecret,
+      redirectUri,
+      env: process.env.NODE_ENV,
+    });
+    throw new Error('Google Calendar credentials not configured. Set GOOGLE_CALENDAR_CLIENT_ID and GOOGLE_CALENDAR_CLIENT_SECRET');
+  }
+  
+  return { clientId, clientSecret, redirectUri };
+}
+
+/**
+ * Criar cliente OAuth2 do Google
+ */
+export function createOAuth2Client() {
+  const { clientId, clientSecret, redirectUri } = getGoogleCalendarConfig();
+  return new google.auth.OAuth2(clientId, clientSecret, redirectUri);
+}
+
+// ============================================
+// AUTENTICAÇÃO OAUTH
+// ============================================
+
+/**
+ * Gerar URL de autorização para o usuário
+ */
+export function getAuthorizationUrl(userId: string): string {
+  const oauth2Client = createOAuth2Client();
+  
+  return oauth2Client.generateAuthUrl({
+    access_type: 'offline',      // Necessário para refresh token
+    prompt: 'consent',           // Força exibir tela de consentimento (garante refresh token)
+    scope: [
+      'https://www.googleapis.com/auth/calendar',
+      'https://www.googleapis.com/auth/calendar.events',
+    ],
+    state: userId,               // Passa userId para identificar no callback
+  });
+}
+
+/**
+ * Trocar código de autorização por tokens e salvar no banco
+ */
+export async function exchangeCodeForTokens(code: string, userId: string) {
+  const oauth2Client = createOAuth2Client();
+  
+  const { tokens } = await oauth2Client.getToken(code);
+  
+  if (!tokens.access_token) {
+    throw new Error('Failed to get access token from Google');
+  }
+  
+  // Se não recebeu refresh_token, pode ser reconexão - tentar manter o antigo
+  let refreshToken = tokens.refresh_token;
+  
+  if (!refreshToken) {
+    // Buscar refresh token existente
+    const { data: existing } = await supabase
+      .from('google_calendar_tokens')
+      .select('refresh_token')
+      .eq('user_id', userId)
+      .single();
+    
+    refreshToken = existing?.refresh_token;
+    
+    if (!refreshToken) {
+      throw new Error('No refresh token received. User may need to revoke access and reconnect.');
+    }
+  }
+  
+  const expiresAt = new Date(tokens.expiry_date || Date.now() + 3600 * 1000);
+  
+  // Upsert tokens no Supabase
+  const { error } = await supabase
+    .from('google_calendar_tokens')
+    .upsert({
+      user_id: userId,
+      access_token: tokens.access_token,
+      refresh_token: refreshToken,
+      token_type: tokens.token_type || 'Bearer',
+      expires_at: expiresAt.toISOString(),
+      scope: tokens.scope || '',
+      updated_at: new Date().toISOString(),
+    }, {
+      onConflict: 'user_id',
+    });
+  
+  if (error) {
+    console.error('[Google Calendar] Failed to save tokens:', error);
+    throw error;
+  }
+  
+  console.log('[Google Calendar] Tokens saved for user:', userId);
+  return tokens;
+}
+
+/**
+ * Obter token de acesso válido (faz refresh automático se expirado)
+ */
+export async function getValidAccessToken(userId: string): Promise<string> {
+  const { data: tokenRecord, error } = await supabase
+    .from('google_calendar_tokens')
+    .select('*')
+    .eq('user_id', userId)
+    .single();
+  
+  if (error || !tokenRecord) {
+    throw new Error('User has not connected Google Calendar');
+  }
+  
+  const oauth2Client = createOAuth2Client();
+  oauth2Client.setCredentials({
+    access_token: tokenRecord.access_token,
+    refresh_token: tokenRecord.refresh_token,
+  });
+  
+  // Verificar se token expirou (com margem de 5 minutos)
+  const expiresAt = new Date(tokenRecord.expires_at);
+  const now = new Date();
+  const marginMs = 5 * 60 * 1000; // 5 minutos
+  
+  if (now.getTime() >= expiresAt.getTime() - marginMs) {
+    console.log('[Google Calendar] Token expired, refreshing...');
+    
+    const { credentials } = await oauth2Client.refreshAccessToken();
+    
+    if (!credentials.access_token) {
+      throw new Error('Failed to refresh access token');
+    }
+    
+    const newExpiresAt = new Date(credentials.expiry_date || Date.now() + 3600 * 1000);
+    
+    // Atualizar no banco
+    await supabase
+      .from('google_calendar_tokens')
+      .update({
+        access_token: credentials.access_token,
+        expires_at: newExpiresAt.toISOString(),
+        updated_at: new Date().toISOString(),
+      })
+      .eq('user_id', userId);
+    
+    console.log('[Google Calendar] Token refreshed successfully');
+    return credentials.access_token;
+  }
+  
+  return tokenRecord.access_token;
+}
+
+// ============================================
+// CLIENTE DA API
+// ============================================
+
+/**
+ * Criar cliente da API Calendar autenticado
+ */
+export async function getCalendarClient(userId: string) {
+  const accessToken = await getValidAccessToken(userId);
+  const oauth2Client = createOAuth2Client();
+  oauth2Client.setCredentials({ access_token: accessToken });
+  return google.calendar({ version: 'v3', auth: oauth2Client });
+}
+
+// ============================================
+// OPERAÇÕES COM CALENDÁRIO
+// ============================================
+
+/**
+ * Listar agendas do usuário
+ */
+export async function listUserCalendars(userId: string) {
+  const calendar = await getCalendarClient(userId);
+  const response = await calendar.calendarList.list();
+  
+  return (response.data.items || []).map(cal => ({
+    id: cal.id || 'primary',
+    summary: cal.summary || 'Minha Agenda',
+    description: cal.description || '',
+    primary: cal.primary || false,
+    backgroundColor: cal.backgroundColor,
+    foregroundColor: cal.foregroundColor,
+  }));
+}
+
+/**
+ * Sincronizar evento do RotinasCare com Google Calendar
+ * Cria automaticamente link do Google Meet
+ */
+export async function syncEventToGoogle(
+  userId: string, 
+  eventId: string, 
+  calendarId: string = 'primary'
+) {
+  const calendar = await getCalendarClient(userId);
+  
+  // Buscar evento no banco
+  const { data: event, error } = await supabase
+    .from('appointments')
+    .select('*')
+    .eq('id', eventId)
+    .single();
+  
+  if (error || !event) {
+    throw new Error(`Event not found: ${eventId}`);
+  }
+  
+  // Preparar evento para o Google
+  const startTime = new Date(event.date);
+  const endTime = new Date(startTime.getTime() + 60 * 60 * 1000); // Default: 1 hora
+  
+  const googleEvent: any = {
+    summary: event.title,
+    description: event.notes || undefined,
+    location: event.location || undefined,
+    start: {
+      dateTime: startTime.toISOString(),
+      timeZone: 'America/Sao_Paulo',
+    },
+    end: {
+      dateTime: endTime.toISOString(),
+      timeZone: 'America/Sao_Paulo',
+    },
+    // Solicitar criação de Google Meet
+    conferenceData: {
+      createRequest: {
+        requestId: `rotinaCare-${eventId}-${Date.now()}`,
+        conferenceSolutionKey: { type: 'hangoutsMeet' },
+      },
+    },
+  };
+  
+  let response;
+  const targetCalendarId = calendarId || event.google_calendar_id || 'primary';
+  
+  if (event.google_calendar_event_id) {
+    // Atualizar evento existente
+    console.log('[Google Calendar] Updating event:', event.google_calendar_event_id);
+    response = await calendar.events.update({
+      calendarId: targetCalendarId,
+      eventId: event.google_calendar_event_id,
+      requestBody: googleEvent,
+      conferenceDataVersion: 1,
+    });
+  } else {
+    // Criar novo evento
+    console.log('[Google Calendar] Creating new event');
+    response = await calendar.events.insert({
+      calendarId: targetCalendarId,
+      requestBody: googleEvent,
+      conferenceDataVersion: 1,
+    });
+  }
+  
+  // Extrair link do Google Meet
+  const meetLink = response.data.hangoutLink || 
+    response.data.conferenceData?.entryPoints?.find(
+      (e: any) => e.entryPointType === 'video'
+    )?.uri;
+  
+  // Atualizar evento no banco com IDs e link do Meet
+  const { error: updateError } = await supabase
+    .from('appointments')
+    .update({
+      google_calendar_event_id: response.data.id,
+      google_calendar_id: targetCalendarId,
+      video_conference_link: meetLink || null,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('id', eventId);
+  
+  if (updateError) {
+    console.error('[Google Calendar] Failed to update event in DB:', updateError);
+  }
+  
+  console.log('[Google Calendar] Event synced:', {
+    googleEventId: response.data.id,
+    meetLink,
+  });
+  
+  return {
+    googleEventId: response.data.id,
+    meetLink,
+    htmlLink: response.data.htmlLink,
+  };
+}
+
+/**
+ * Deletar evento do Google Calendar
+ */
+export async function deleteEventFromGoogle(
+  userId: string, 
+  googleCalendarEventId: string,
+  calendarId: string = 'primary'
+) {
+  const calendar = await getCalendarClient(userId);
+  
+  await calendar.events.delete({
+    calendarId,
+    eventId: googleCalendarEventId,
+  });
+  
+  console.log('[Google Calendar] Event deleted:', googleCalendarEventId);
+}
+
+// ============================================
+// STATUS E GERENCIAMENTO
+// ============================================
+
+/**
+ * Verificar se usuário conectou Google Calendar
+ */
+export async function isGoogleCalendarConnected(userId: string): Promise<boolean> {
+  const { data } = await supabase
+    .from('google_calendar_tokens')
+    .select('id')
+    .eq('user_id', userId)
+    .single();
+  
+  return !!data;
+}
+
+/**
+ * Desconectar Google Calendar (remover tokens)
+ */
+export async function disconnectGoogleCalendar(userId: string) {
+  const { error } = await supabase
+    .from('google_calendar_tokens')
+    .delete()
+    .eq('user_id', userId);
+  
+  if (error) {
+    console.error('[Google Calendar] Failed to disconnect:', error);
+    throw error;
+  }
+  
+  console.log('[Google Calendar] Disconnected for user:', userId);
+}
+
+/**
+ * Obter informações da conexão
+ */
+export async function getConnectionInfo(userId: string) {
+  const { data } = await supabase
+    .from('google_calendar_tokens')
+    .select('created_at, updated_at, scope')
+    .eq('user_id', userId)
+    .single();
+  
+  if (!data) return null;
+  
+  return {
+    connectedAt: data.created_at,
+    lastRefreshedAt: data.updated_at,
+    scopes: data.scope?.split(' ') || [],
+  };
+}

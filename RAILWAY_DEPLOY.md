@@ -1,4 +1,4 @@
-# Deploy do Backend no Railway - RotinasCare
+# Deploy do Backend no Railway - RotinaCare
 
 Guia completo para fazer deploy do servidor tRPC/Express no Railway.
 
@@ -339,7 +339,7 @@ Configure alertas no Sentry (já integrado):
 - **Unlimited** tráfego
 - Suporte prioritário
 
-**Estimativa para RotinasCare:**
+**Estimativa para RotinaCare:**
 - Hobby Plan é suficiente para começar
 - ~$3-5/mês de uso real
 

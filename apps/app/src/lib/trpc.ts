@@ -1,17 +1,24 @@
 import { createTRPCReact } from '@trpc/react-query';
 import { httpBatchLink } from '@trpc/client';
-import type { AppRouter } from '@rotinacare/api-types';
+import type { AppRouter } from '@rotinacare/server';
 
 export const trpc = createTRPCReact<AppRouter>();
+
+// Função para obter token do localStorage
+function getAuthToken(): string {
+  if (typeof window === 'undefined') return '';
+  return localStorage.getItem('rotinacare_token') || '';
+}
 
 export const trpcClient = trpc.createClient({
   links: [
     httpBatchLink({
-      url: import.meta.env.VITE_API_URL || 'http://localhost:4000/api/trpc',
+      url: import.meta.env.VITE_API_URL 
+        ? `${import.meta.env.VITE_API_URL}/api/trpc`
+        : 'http://localhost:4000/api/trpc',
       headers() {
-        return {
-          authorization: localStorage.getItem('token') || '',
-        };
+        const token = getAuthToken();
+        return token ? { authorization: `Bearer ${token}` } : {};
       },
     }),
   ],

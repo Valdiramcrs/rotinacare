@@ -19,7 +19,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
       {/* Sidebar */}
       <aside className="fixed left-0 top-0 h-full w-64 border-r bg-card">
         <div className="p-6">
-          <h1 className="text-2xl font-bold text-primary">RotinasCare</h1>
+          <h1 className="text-2xl font-bold text-primary">RotinaCare</h1>
           <p className="text-xs text-muted-foreground mt-1">Painel Administrativo</p>
         </div>
 

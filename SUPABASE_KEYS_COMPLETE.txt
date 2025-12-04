@@ -1,0 +1,18 @@
+# Chaves do Supabase - RotinasCare - COMPLETO ✅
+
+## URL
+SUPABASE_URL=https://pcthuczsisjnnettogln.supabase.co
+
+## Anon Key (Public)
+SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjdGh1Y3pzaXNqbm5ldHRvZ2xuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ2Mjg2MDUsImV4cCI6MjA4MDIwNDYwNX0.-k1x3imfl057edQJwAneEll-65uKWba4cwXfnf-uIDk
+
+## Service Role Key (Secret) ⚠️ NUNCA EXPONHA NO FRONTEND
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjdGh1Y3pzaXNqbm5ldHRvZ2xuIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NDYyODYwNSwiZXhwIjoyMDgwMjA0NjA1fQ.4Zll3Xyeul5v0KFsD6Uy2cHy3YtZdj1f8Cw-ixYychs
+
+---
+
+⚠️ **SEGURANÇA:**
+- A service_role key tem acesso TOTAL ao banco de dados
+- NUNCA commite no Git
+- NUNCA exponha no frontend
+- Use apenas no backend (Railway)

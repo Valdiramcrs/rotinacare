@@ -1,4 +1,4 @@
-# Deploy dos Frontends no Vercel - RotinasCare
+# Deploy dos Frontends no Vercel - RotinaCare
 
 Guia completo para fazer deploy das três aplicações frontend (Landing, App, Admin) no Vercel.
 
@@ -73,7 +73,7 @@ Clique em **"Add Environment Variable"**:
 
 ```env
 VITE_API_URL=https://api.rotinacare.com
-VITE_APP_NAME=RotinasCare
+VITE_APP_NAME=RotinaCare
 VITE_APP_VERSION=1.0.0
 ```
 
@@ -136,7 +136,7 @@ CNAME www  cname.vercel-dns.com
 
 ```env
 VITE_API_URL=https://api.rotinacare.com
-VITE_APP_NAME=RotinasCare App
+VITE_APP_NAME=RotinaCare App
 VITE_APP_VERSION=1.0.0
 ```
 
@@ -180,7 +180,7 @@ CNAME app  cname.vercel-dns.com
 
 ```env
 VITE_API_URL=https://api.rotinacare.com
-VITE_APP_NAME=RotinasCare Admin
+VITE_APP_NAME=RotinaCare Admin
 VITE_APP_VERSION=1.0.0
 ```
 
@@ -456,7 +456,7 @@ Você pode ter variáveis diferentes para:
 - Startups
 - ~100k visitantes/mês
 
-### Estimativa RotinasCare
+### Estimativa RotinaCare
 
 - **Hobby Plan:** Gratuito (início)
 - **Pro Plan:** $20/mês (crescimento)

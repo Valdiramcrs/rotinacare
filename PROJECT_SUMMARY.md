@@ -1,8 +1,8 @@
-# RotinasCare - Resumo do Projeto
+# RotinaCare - Resumo do Projeto
 
 ## ✅ Projeto Criado com Sucesso!
 
-Este monorepo contém uma arquitetura completa para a plataforma RotinasCare.
+Este monorepo contém uma arquitetura completa para a plataforma RotinaCare.
 
 ## 📊 Estatísticas do Projeto
 

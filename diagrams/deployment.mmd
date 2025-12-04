@@ -1,0 +1,52 @@
+graph TB
+    subgraph "DNS - Hostinger"
+        DNS["Registros DNS<br/>CNAME"]
+    end
+
+    subgraph "Vercel - Frontend"
+        VLanding["Landing<br/>www.rotinacare.com"]
+        VApp["App<br/>app.rotinacare.com"]
+        VAdmin["Admin<br/>admin.rotinacare.com"]
+    end
+
+    subgraph "Railway - Backend"
+        RailwayAPI["API Server<br/>api.rotinacare.com<br/>Port 4000<br/>Metal Edge"]
+        RailwayEnv["Environment:<br/>NODE_ENV=production<br/>DATABASE_URL<br/>JWT_SECRET<br/>CORS_ORIGINS"]
+    end
+
+    subgraph "Supabase - Database"
+        SupabaseDB["PostgreSQL<br/>Database"]
+        SupabaseConn["Connection String"]
+    end
+
+    subgraph "Build Process"
+        GithubLanding["GitHub Repo<br/>apps/landing"]
+        GithubApp["GitHub Repo<br/>apps/app"]
+        GithubAdmin["GitHub Repo<br/>apps/admin"]
+        GithubServer["GitHub Repo<br/>server"]
+    end
+
+    DNS --> VLanding
+    DNS --> VApp
+    DNS --> VAdmin
+    DNS --> RailwayAPI
+
+    GithubLanding -->|Auto Deploy| VLanding
+    GithubApp -->|Auto Deploy| VApp
+    GithubAdmin -->|Auto Deploy| VAdmin
+    GithubServer -->|Docker Build| RailwayAPI
+
+    VLanding -->|HTTPS| RailwayAPI
+    VApp -->|HTTPS| RailwayAPI
+    VAdmin -->|HTTPS| RailwayAPI
+
+    RailwayAPI --> RailwayEnv
+    RailwayAPI -->|SSL Connection| SupabaseDB
+    SupabaseDB --> SupabaseConn
+
+    style DNS fill:#fff4e1
+    style VLanding fill:#e1f5ff
+    style VApp fill:#e1f5ff
+    style VAdmin fill:#e1f5ff
+    style RailwayAPI fill:#ffe1e1
+    style SupabaseDB fill:#e1ffe1

@@ -1,4 +1,4 @@
-# Guia de Início Rápido - RotinasCare
+# Guia de Início Rápido - RotinaCare
 
 ## Visão Geral
 

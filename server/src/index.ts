@@ -4,7 +4,11 @@ import cors from 'cors';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { appRouter } from './routers/index.js';
 import { createContext } from './trpc.js';
-import authRoutes from './routes/auth.js';
+// REMOVIDO: Rotas Supabase Auth (conflitante com tRPC JWT)
+// import authRoutes from './routes/auth.js';
+import googleCalendarRoutes from './routes/googleCalendar.js';
+import emailRoutes from './routes/email.js';
+import cronRoutes from './routes/cron.js';
 
 const app = express();
 
@@ -33,8 +37,18 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Auth routes (Supabase Auth)
-app.use('/api/auth', authRoutes);
+// REMOVIDO: Rotas Supabase Auth (conflitante com tRPC JWT)
+// Auth agora é feito via tRPC: /api/trpc/auth.login e /api/trpc/auth.register
+// app.use('/api/auth', authRoutes);
+
+// Google Calendar routes
+app.use('/api/google-calendar', googleCalendarRoutes);
+
+// Email routes
+app.use('/api/email', emailRoutes);
+
+// Cron routes
+app.use('/api/cron', cronRoutes);
 
 // tRPC middleware
 app.use('/api/trpc', createExpressMiddleware({

@@ -1,0 +1,56 @@
+graph TD
+    Root["rotinacare/<br/>(Monorepo Root)"]
+    
+    Root --> Apps["apps/"]
+    Root --> Packages["packages/"]
+    Root --> Server["server/"]
+    Root --> Config["Configurações"]
+
+    Apps --> Landing["landing/<br/>(Landing Page)"]
+    Apps --> App["app/<br/>(App Principal)"]
+    Apps --> Admin["admin/<br/>(Painel Admin)"]
+
+    Landing --> LandingSrc["src/"]
+    LandingSrc --> LandingPages["pages/"]
+    LandingSrc --> LandingComponents["components/"]
+
+    App --> AppSrc["src/"]
+    AppSrc --> AppPages["pages/"]
+    AppSrc --> AppComponents["components/"]
+    AppSrc --> AppHooks["hooks/"]
+    AppSrc --> AppUtils["utils/"]
+
+    Admin --> AdminSrc["src/"]
+    AdminSrc --> AdminPages["pages/"]
+    AdminSrc --> AdminComponents["components/"]
+
+    Packages --> Shared["shared/<br/>(Types + Schemas)"]
+    Packages --> UI["ui/<br/>(Componentes)"]
+
+    Shared --> SharedTypes["types/"]
+    Shared --> SharedSchemas["schemas/"]
+    Shared --> SharedUtils["utils/"]
+
+    Server --> ServerSrc["src/"]
+    ServerSrc --> ServerRouters["routers/"]
+    ServerSrc --> ServerDB["db/"]
+    ServerSrc --> ServerMiddleware["middleware/"]
+
+    ServerDB --> Schema["schema.ts"]
+    ServerDB --> Migrations["migrations/"]
+
+    ServerRouters --> DoctorRouter["doctors.ts"]
+    ServerRouters --> MedicationRouter["medications.ts"]
+    ServerRouters --> ExamRouter["exams.ts"]
+    ServerRouters --> AppointmentRouter["appointments.ts"]
+
+    Config --> PackageJSON["package.json"]
+    Config --> PnpmWorkspace["pnpm-workspace.yaml"]
+    Config --> Dockerfile["server/Dockerfile"]
+    Config --> EnvExample[".env.example"]
+
+    style Root fill:#f9f9f9
+    style Apps fill:#e1f5ff
+    style Packages fill:#fff4e1
+    style Server fill:#ffe1e1
+    style Config fill:#e1ffe1
