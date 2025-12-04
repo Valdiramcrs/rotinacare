@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'wouter';
 import { Button, Avatar, AvatarFallback } from '@rotinacare/ui';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
