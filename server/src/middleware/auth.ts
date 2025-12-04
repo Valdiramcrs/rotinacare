@@ -1,11 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
-import { supabase } from '../lib/supabase.js';
+import { verifyToken } from '../lib/auth.js';
 
 export interface AuthenticatedRequest extends Request {
   user?: {
     id: string;
+    userId: string;
     email?: string;
     name?: string;
+    role?: string;
   };
 }
 
@@ -26,23 +28,24 @@ export async function authMiddleware(
     
     const token = authHeader.substring(7);
     
-    const { data: { user }, error } = await supabase.auth.getUser(token);
-    
-    if (error || !user) {
-      console.error('[Auth] Token validation failed:', error?.message);
+    try {
+      const payload = verifyToken(token);
+      
+      req.user = {
+        id: payload.userId,
+        userId: payload.userId,
+        email: payload.email,
+        role: payload.role,
+      };
+      
+      next();
+    } catch (error: any) {
+      console.error('[Auth] Token validation failed:', error.message);
       return res.status(401).json({ 
         error: 'Invalid or expired token',
         code: 'INVALID_TOKEN'
       });
     }
-    
-    req.user = {
-      id: user.id,
-      email: user.email,
-      name: user.user_metadata?.full_name || user.user_metadata?.name,
-    };
-    
-    next();
   } catch (error) {
     console.error('[Auth] Middleware error:', error);
     res.status(500).json({ 
@@ -63,14 +66,17 @@ export async function optionalAuthMiddleware(
     
     if (authHeader?.startsWith('Bearer ')) {
       const token = authHeader.substring(7);
-      const { data: { user } } = await supabase.auth.getUser(token);
       
-      if (user) {
+      try {
+        const payload = verifyToken(token);
         req.user = {
-          id: user.id,
-          email: user.email,
-          name: user.user_metadata?.full_name,
+          id: payload.userId,
+          userId: payload.userId,
+          email: payload.email,
+          role: payload.role,
         };
+      } catch {
+        // Ignora erro - continua sem autenticação
       }
     }
     
