@@ -11,6 +11,7 @@ import { Appointments } from './pages/Appointments';
 import { Settings } from './pages/Settings';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
+import AuthCallback from './pages/AuthCallback';
 
 
 const queryClient = new QueryClient({
@@ -28,6 +29,7 @@ function AppRoutes() {
       {/* Rotas públicas */}
       <Route path="/login" component={LoginPage} />
       <Route path="/register" component={RegisterPage} />
+      <Route path="/auth/callback" component={AuthCallback} />
       
       {/* Rotas protegidas */}
       <Route path="/">

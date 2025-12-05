@@ -14,6 +14,9 @@ export const users = pgTable('users', {
   isProfessional: boolean('is_professional').default(false),
   isPatient: boolean('is_patient').default(true),
   avatarUrl: text('avatar_url'),
+  googleId: varchar('google_id', { length: 255 }),
+  googleAccessToken: text('google_access_token'),
+  googleRefreshToken: text('google_refresh_token'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });

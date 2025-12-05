@@ -9,6 +9,7 @@ import { Clinics } from './pages/Clinics';
 import { Reports } from './pages/Reports';
 import { Settings } from './pages/Settings';
 import Login from './pages/Login';
+import AuthCallback from './pages/AuthCallback';
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ export default function App() {
       <QueryClientProvider client={queryClient}>
         <Switch>
           <Route path="/login" component={Login} />
+          <Route path="/auth/callback" component={AuthCallback} />
           <AdminProtectedRoute>
             <AdminLayout>
               <Switch>

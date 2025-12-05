@@ -7,6 +7,7 @@ import { createContext } from './trpc.js';
 // REMOVIDO: Rotas Supabase Auth (conflitante com tRPC JWT)
 // import authRoutes from './routes/auth.js';
 import googleCalendarRoutes from './routes/googleCalendar.js';
+import googleAuthRoutes from './routes/googleAuth.js';
 import emailRoutes from './routes/email.js';
 import cronRoutes from './routes/cron.js';
 import { authMiddleware, AuthenticatedRequest } from './middleware/auth.js';
@@ -43,6 +44,9 @@ app.get('/api/health', (req, res) => {
 // REMOVIDO: Rotas Supabase Auth (conflitante com tRPC JWT)
 // Auth agora é feito via tRPC: /api/trpc/auth.login e /api/trpc/auth.register
 // app.use('/api/auth', authRoutes);
+
+// Google OAuth routes (social login)
+app.use('/api/auth', googleAuthRoutes);
 
 // Google Calendar auth-url route (direct registration to avoid timeout)
 app.get('/api/google-calendar/auth-url', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
