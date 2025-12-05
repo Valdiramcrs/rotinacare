@@ -35,6 +35,7 @@ export default function LoginPage() {
 
       if (data.result?.data?.token) {
         const { token, user } = data.result.data;
+        console.log('[Login Admin] User data:', user);
         
         // Verificar se é admin
         if (!user.isAdmin) {
