@@ -1,9 +1,9 @@
 import { Router, Request, Response } from 'express';
 import { OAuth2Client } from 'google-auth-library';
 import { db } from '../db/index.js';
-import { users } from '../db/schema.js';
+import { users, googleCalendarTokens } from '../db/schema.js';
 import { eq } from 'drizzle-orm';
-import { generateToken } from '../lib/auth.js';
+import { generateToken, verifyToken } from '../lib/auth.js';
 import { randomUUID } from 'crypto';
 
 const router = Router();
@@ -151,6 +151,60 @@ router.get('/google/callback', async (req: Request, res: Response) => {
   } catch (error: any) {
     console.error('[Google OAuth] Callback error:', error);
     res.redirect(`${frontendUrl}/login?error=auth_failed&message=${encodeURIComponent(error.message)}`);
+  }
+});
+
+/**
+ * POST /api/auth/google/disconnect
+ * Desconecta conta Google do usuário (remove tokens e googleId)
+ */
+router.post('/google/disconnect', async (req: Request, res: Response) => {
+  try {
+    const authHeader = req.headers.authorization;
+    
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const token = authHeader.substring(7);
+    const decoded = verifyToken(token);
+    
+    if (!decoded || !decoded.userId) {
+      return res.status(401).json({ error: 'Invalid token' });
+    }
+
+    const userId = decoded.userId;
+
+    console.log('[Google Disconnect] Disconnecting user:', userId);
+
+    // Remover tokens do Google da tabela users
+    await db
+      .update(users)
+      .set({
+        googleId: null,
+        googleAccessToken: null,
+        googleRefreshToken: null,
+        updatedAt: new Date(),
+      })
+      .where(eq(users.id, userId));
+
+    // Remover tokens do Google Calendar (se existirem)
+    await db
+      .delete(googleCalendarTokens)
+      .where(eq(googleCalendarTokens.userId, userId));
+
+    console.log('[Google Disconnect] User disconnected successfully');
+
+    res.json({ 
+      success: true, 
+      message: 'Google account disconnected successfully' 
+    });
+  } catch (error: any) {
+    console.error('[Google Disconnect] Error:', error);
+    res.status(500).json({ 
+      error: 'Failed to disconnect Google account',
+      message: error.message 
+    });
   }
 });
 

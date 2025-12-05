@@ -1,5 +1,6 @@
 import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent, Input } from '@rotinacare/ui';
 import { GoogleCalendarIntegration } from '../components/GoogleCalendarIntegration';
+import { GoogleAccountSettings } from '../components/GoogleAccountSettings';
 
 export function Settings() {
   return (
@@ -68,6 +69,8 @@ export function Settings() {
             <Button>Salvar preferências</Button>
           </CardContent>
         </Card>
+
+        <GoogleAccountSettings />
 
         <GoogleCalendarIntegration />
 
