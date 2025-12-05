@@ -1,10 +1,10 @@
 import { Link, useLocation } from 'wouter';
 import { Button, Avatar, AvatarFallback } from '@rotinacare/ui';
-import { useAdminAuth } from '../contexts/AdminAuthContext';
+import { useAuth } from '../hooks/useAuth';
 
 export function AdminLayout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
-  const { user, logout } = useAdminAuth();
+  const { user, logout } = useAuth();
 
   const navItems = [
     { href: '/', label: 'Dashboard', icon: '📊' },
