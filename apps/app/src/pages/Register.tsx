@@ -145,6 +145,12 @@ export default function RegisterPage() {
             {registerMutation.isPending ? 'Criando conta...' : 'Criar conta'}
           </button>
         </form>
+
+        <div className="mt-6 text-center text-xs text-gray-500">
+          <a href="/privacy" className="hover:underline">Política de Privacidade</a>
+          {' · '}
+          <a href="/terms" className="hover:underline">Termos de Serviço</a>
+        </div>
       </div>
     </div>
   );

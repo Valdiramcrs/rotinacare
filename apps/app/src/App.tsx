@@ -12,6 +12,8 @@ import { Settings } from './pages/Settings';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import AuthCallback from './pages/AuthCallback';
+import PrivacyPage from './pages/Privacy';
+import TermsPage from './pages/Terms';
 
 
 const queryClient = new QueryClient({
@@ -30,6 +32,8 @@ function AppRoutes() {
       <Route path="/login" component={LoginPage} />
       <Route path="/register" component={RegisterPage} />
       <Route path="/auth/callback" component={AuthCallback} />
+      <Route path="/privacy" component={PrivacyPage} />
+      <Route path="/terms" component={TermsPage} />
       
       {/* Rotas protegidas */}
       <Route path="/">
