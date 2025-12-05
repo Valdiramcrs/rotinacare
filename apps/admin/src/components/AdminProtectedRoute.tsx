@@ -8,7 +8,7 @@ interface AdminProtectedRouteProps {
 export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
   const { isAuthenticated, isLoading, user } = useAuth();
 
-  console.log('[AdminProtectedRoute] Estado:', { isAuthenticated, isLoading, role: user?.role });
+  console.log('[AdminProtectedRoute] Estado:', { isAuthenticated, isLoading, isAdmin: user?.isAdmin });
 
   // Aguardar hydration do Zustand
   if (isLoading) {
@@ -20,7 +20,7 @@ export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
   }
 
   // Verificar se está autenticado E é admin
-  if (!isAuthenticated || user?.role !== 'admin') {
+  if (!isAuthenticated || !user?.isAdmin) {
     console.log('[AdminProtectedRoute] Não autorizado, redirecionando para /login');
     return <Redirect to="/login" />;
   }

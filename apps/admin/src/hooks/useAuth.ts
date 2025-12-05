@@ -6,6 +6,9 @@ interface User {
   email: string;
   name: string;
   role: string;
+  isAdmin: boolean;
+  isProfessional: boolean;
+  isPatient: boolean;
   avatarUrl?: string | null;
 }
 

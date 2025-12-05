@@ -37,7 +37,7 @@ export default function LoginPage() {
         const { token, user } = data.result.data;
         
         // Verificar se é admin
-        if (user.role !== 'admin') {
+        if (!user.isAdmin) {
           setError('Acesso restrito a administradores.');
           return;
         }

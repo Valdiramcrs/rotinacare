@@ -10,6 +10,9 @@ export const users = pgTable('users', {
   password: varchar('password', { length: 255 }).notNull(),
   name: varchar('name', { length: 255 }).notNull(),
   role: varchar('role', { length: 50 }).notNull().default('patient'), // patient, doctor, admin
+  isAdmin: boolean('is_admin').default(false),
+  isProfessional: boolean('is_professional').default(false),
+  isPatient: boolean('is_patient').default(true),
   avatarUrl: text('avatar_url'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),

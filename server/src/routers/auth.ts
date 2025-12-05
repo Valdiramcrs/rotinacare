@@ -57,6 +57,9 @@ export const authRouter = router({
           email: user.email,
           name: user.name,
           role: user.role,
+          isAdmin: user.isAdmin ?? false,
+          isProfessional: user.isProfessional ?? false,
+          isPatient: user.isPatient ?? true,
           avatarUrl: user.avatarUrl,
         },
       };
@@ -119,6 +122,9 @@ export const authRouter = router({
           email: input.email,
           name: input.name,
           role: 'patient',
+          isAdmin: false,
+          isProfessional: false,
+          isPatient: true,
           avatarUrl: null,
         },
       };
@@ -134,6 +140,9 @@ export const authRouter = router({
         email: users.email,
         name: users.name,
         role: users.role,
+        isAdmin: users.isAdmin,
+        isProfessional: users.isProfessional,
+        isPatient: users.isPatient,
         avatarUrl: users.avatarUrl,
         createdAt: users.createdAt,
       })
