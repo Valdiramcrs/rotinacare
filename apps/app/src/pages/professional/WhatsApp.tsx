@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, Button, Input, Textarea, Label } from '@rotinacare/ui';
-import { MessageCircle, Send, Users, Clock, CheckCircle, XCircle } from 'lucide-react';
+import { MessageCircle, Send, Clock, CheckCircle, XCircle } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 
 export function ProfessionalWhatsApp() {
@@ -214,7 +214,7 @@ export function ProfessionalWhatsApp() {
               placeholder="Digite sua mensagem..."
               rows={4}
               value={messageForm.message}
-              onChange={(e) => setMessageForm({ ...messageForm, message: e.target.value })}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMessageForm({ ...messageForm, message: e.target.value })}
             />
           </div>
 
