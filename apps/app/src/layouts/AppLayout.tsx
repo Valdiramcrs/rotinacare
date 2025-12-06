@@ -83,9 +83,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         <header className="sticky top-0 z-10 bg-background border-b">
           <div className="flex items-center justify-end px-8 py-4">
             {/* Seletor de perfil no canto direito */}
-            {user?.isProfessional && (
-              <ProfileSelector isProfessional={true} />
-            )}
+            <ProfileSelector isProfessional={user?.isProfessional || false} />
           </div>
         </header>
 
