@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getWhatsAppService } from '../services/whatsappService';
+import { getWhatsAppService } from '../services/whatsappService.js';
 import { authMiddleware } from '../middleware/auth';
 
 const router = Router();
