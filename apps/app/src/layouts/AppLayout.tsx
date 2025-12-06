@@ -78,20 +78,17 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       </aside>
 
       {/* Main content with header */}
-      <div className="ml-64">
+      <div className="ml-64 flex flex-col min-h-screen">
         {/* Header superior */}
-        <header className="sticky top-0 z-10 bg-white border-b shadow-sm">
-          <div className="flex items-center justify-between px-8 py-4">
-            <div className="text-sm text-gray-600">
-              Debug: isProfessional = {String(user?.isProfessional)}
-            </div>
+        <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
+          <div className="flex items-center justify-end px-8 py-4">
             {/* Seletor de perfil no canto direito */}
             <ProfileSelector isProfessional={user?.isProfessional || false} />
           </div>
         </header>
 
         {/* Conteúdo */}
-        <main className="p-8">
+        <main className="flex-1 p-8">
           {children}
         </main>
       </div>
