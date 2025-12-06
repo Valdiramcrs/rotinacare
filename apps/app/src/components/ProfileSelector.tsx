@@ -59,7 +59,7 @@ export function ProfileSelector({ isProfessional, onModeChange }: ProfileSelecto
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors min-w-[200px]"
+        className="flex items-center gap-2 px-4 py-2.5 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors min-w-[220px] shadow-sm"
       >
         {currentModeData && (
           <>
@@ -79,7 +79,7 @@ export function ProfileSelector({ isProfessional, onModeChange }: ProfileSelecto
           />
 
           {/* Dropdown */}
-          <div className="absolute top-full left-0 mt-2 w-full bg-white rounded-lg shadow-lg border border-gray-200 z-20 overflow-hidden">
+          <div className="absolute top-full right-0 mt-2 w-[280px] bg-white rounded-lg shadow-lg border border-gray-200 z-20 overflow-hidden">
             {modes.map((mode) => (
               <button
                 key={mode.id}

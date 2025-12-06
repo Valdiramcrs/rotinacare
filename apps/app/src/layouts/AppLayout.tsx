@@ -41,8 +41,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       {/* Sidebar */}
       <aside className="fixed left-0 top-0 h-full w-64 border-r bg-card">
         <div className="p-6">
-          <h1 className="text-2xl font-bold text-primary mb-4">RotinaCare</h1>
-          <ProfileSelector isProfessional={user?.isProfessional || false} />
+          <h1 className="text-2xl font-bold text-primary">RotinaCare</h1>
         </div>
 
         <nav className="px-3 space-y-1">
@@ -78,10 +77,23 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
 
-      {/* Main content */}
-      <main className="ml-64 p-8">
-        {children}
-      </main>
+      {/* Main content with header */}
+      <div className="ml-64">
+        {/* Header superior */}
+        <header className="sticky top-0 z-10 bg-background border-b">
+          <div className="flex items-center justify-end px-8 py-4">
+            {/* Seletor de perfil no canto direito */}
+            {user?.isProfessional && (
+              <ProfileSelector isProfessional={true} />
+            )}
+          </div>
+        </header>
+
+        {/* Conteúdo */}
+        <main className="p-8">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }
