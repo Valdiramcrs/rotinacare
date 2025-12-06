@@ -14,6 +14,9 @@ import RegisterPage from './pages/Register';
 import AuthCallback from './pages/AuthCallback';
 import PrivacyPage from './pages/Privacy';
 import TermsPage from './pages/Terms';
+import { ProfessionalDashboard } from './pages/professional/Dashboard';
+import { ProfessionalPatients } from './pages/professional/Patients';
+import { ProfessionalWhatsApp } from './pages/professional/WhatsApp';
 
 
 const queryClient = new QueryClient({
@@ -88,6 +91,47 @@ function AppRoutes() {
         <ProtectedRoute>
           <AppLayout>
             <Settings />
+          </AppLayout>
+        </ProtectedRoute>
+      </Route>
+      
+      {/* Rotas profissionais */}
+      <Route path="/professional">
+        <ProtectedRoute>
+          <AppLayout>
+            <ProfessionalDashboard />
+          </AppLayout>
+        </ProtectedRoute>
+      </Route>
+      
+      <Route path="/professional/patients">
+        <ProtectedRoute>
+          <AppLayout>
+            <ProfessionalPatients />
+          </AppLayout>
+        </ProtectedRoute>
+      </Route>
+      
+      <Route path="/professional/appointments">
+        <ProtectedRoute>
+          <AppLayout>
+            <Dashboard />
+          </AppLayout>
+        </ProtectedRoute>
+      </Route>
+      
+      <Route path="/professional/whatsapp">
+        <ProtectedRoute>
+          <AppLayout>
+            <ProfessionalWhatsApp />
+          </AppLayout>
+        </ProtectedRoute>
+      </Route>
+      
+      <Route path="/professional/reports">
+        <ProtectedRoute>
+          <AppLayout>
+            <Dashboard />
           </AppLayout>
         </ProtectedRoute>
       </Route>

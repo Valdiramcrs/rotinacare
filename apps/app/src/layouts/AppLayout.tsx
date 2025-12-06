@@ -1,12 +1,19 @@
 import { Link, useLocation } from 'wouter';
 import { Button, Avatar, AvatarFallback } from '@rotinacare/ui';
 import { useAuth } from '../hooks/useAuth';
+import { ProfileSelector } from '../components/ProfileSelector';
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const { user, logout } = useAuth();
 
-  const navItems = [
+  // Detectar modo atual
+  const profileMode = typeof window !== 'undefined' 
+    ? (localStorage.getItem('profileMode') || 'patient')
+    : 'patient';
+
+  // Menu para pacientes
+  const patientNavItems = [
     { href: '/', label: 'Dashboard', icon: '📊' },
     { href: '/doctors', label: 'Médicos', icon: '👨‍⚕️' },
     { href: '/medications', label: 'Medicamentos', icon: '💊' },
@@ -15,12 +22,27 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     { href: '/settings', label: 'Configurações', icon: '⚙️' },
   ];
 
+  // Menu para profissionais
+  const professionalNavItems = [
+    { href: '/professional', label: 'Dashboard', icon: '📊' },
+    { href: '/professional/patients', label: 'Pacientes', icon: '👥' },
+    { href: '/professional/appointments', label: 'Agenda', icon: '📅' },
+    { href: '/professional/whatsapp', label: 'WhatsApp', icon: '💬' },
+    { href: '/professional/reports', label: 'Relatórios', icon: '📈' },
+    { href: '/settings', label: 'Configurações', icon: '⚙️' },
+  ];
+
+  const navItems = profileMode === 'professional' && user?.isProfessional
+    ? professionalNavItems
+    : patientNavItems;
+
   return (
     <div className="min-h-screen bg-background">
       {/* Sidebar */}
       <aside className="fixed left-0 top-0 h-full w-64 border-r bg-card">
         <div className="p-6">
-          <h1 className="text-2xl font-bold text-primary">RotinaCare</h1>
+          <h1 className="text-2xl font-bold text-primary mb-4">RotinaCare</h1>
+          <ProfileSelector isProfessional={user?.isProfessional || false} />
         </div>
 
         <nav className="px-3 space-y-1">
