@@ -1,6 +1,9 @@
 import { Button, Card, CardHeader, CardTitle, CardContent, Badge } from '@rotinacare/ui';
+import { WhatsAppButton, useWhatsAppMessage } from '../components/WhatsAppButton';
 
 export function Doctors() {
+  const { formatDoctorMessage } = useWhatsAppMessage();
+
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
@@ -36,13 +39,27 @@ export function Doctors() {
                 <span className="text-muted-foreground">Local:</span> São Paulo, SP
               </div>
             </div>
-            <div className="flex gap-2 mt-4">
-              <Button size="sm" variant="outline" className="flex-1">
-                Editar
-              </Button>
-              <Button size="sm" variant="destructive">
-                Excluir
-              </Button>
+            <div className="flex flex-col gap-2 mt-4">
+              <WhatsAppButton
+                message={formatDoctorMessage({
+                  patientName: 'João da Silva',
+                  doctorName: 'João Silva',
+                  message: 'Olá Dr. João, gostaria de tirar uma dúvida sobre minha consulta.',
+                })}
+                phoneNumber="5511987654321"
+                size="sm"
+                className="bg-green-500 hover:bg-green-600 text-white w-full"
+              >
+                Enviar Mensagem
+              </WhatsAppButton>
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline" className="flex-1">
+                  Editar
+                </Button>
+                <Button size="sm" variant="destructive">
+                  Excluir
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -71,13 +88,27 @@ export function Doctors() {
                 <span className="text-muted-foreground">Local:</span> São Paulo, SP
               </div>
             </div>
-            <div className="flex gap-2 mt-4">
-              <Button size="sm" variant="outline" className="flex-1">
-                Editar
-              </Button>
-              <Button size="sm" variant="destructive">
-                Excluir
-              </Button>
+            <div className="flex flex-col gap-2 mt-4">
+              <WhatsAppButton
+                message={formatDoctorMessage({
+                  patientName: 'João da Silva',
+                  doctorName: 'Maria Santos',
+                  message: 'Olá Dra. Maria, gostaria de tirar uma dúvida sobre meus exames.',
+                })}
+                phoneNumber="5511912345678"
+                size="sm"
+                className="bg-green-500 hover:bg-green-600 text-white w-full"
+              >
+                Enviar Mensagem
+              </WhatsAppButton>
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline" className="flex-1">
+                  Editar
+                </Button>
+                <Button size="sm" variant="destructive">
+                  Excluir
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -106,13 +137,27 @@ export function Doctors() {
                 <span className="text-muted-foreground">Local:</span> São Paulo, SP
               </div>
             </div>
-            <div className="flex gap-2 mt-4">
-              <Button size="sm" variant="outline" className="flex-1">
-                Editar
-              </Button>
-              <Button size="sm" variant="destructive">
-                Excluir
-              </Button>
+            <div className="flex flex-col gap-2 mt-4">
+              <WhatsAppButton
+                message={formatDoctorMessage({
+                  patientName: 'João da Silva',
+                  doctorName: 'Pedro Costa',
+                  message: 'Olá Dr. Pedro, gostaria de agendar uma consulta de retorno.',
+                })}
+                phoneNumber="5511998765432"
+                size="sm"
+                className="bg-green-500 hover:bg-green-600 text-white w-full"
+              >
+                Enviar Mensagem
+              </WhatsAppButton>
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline" className="flex-1">
+                  Editar
+                </Button>
+                <Button size="sm" variant="destructive">
+                  Excluir
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>

@@ -1,6 +1,9 @@
 import { Button, Card, CardContent, Badge } from '@rotinacare/ui';
+import { WhatsAppButton, useWhatsAppMessage } from '../components/WhatsAppButton';
 
 export function Appointments() {
+  const { formatAppointmentConfirmation } = useWhatsAppMessage();
+
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
@@ -42,7 +45,21 @@ export function Appointments() {
                   Consulta de rotina - Checkup cardiológico anual
                 </p>
               </div>
-              <div className="flex gap-2 ml-4">
+              <div className="flex flex-col gap-2 ml-4">
+                <WhatsAppButton
+                  message={formatAppointmentConfirmation({
+                    title: 'Consulta com Cardiologista',
+                    doctor: 'Dr. João Silva',
+                    date: '15/12/2025',
+                    time: '14:00',
+                    location: 'Clínica São Paulo',
+                  })}
+                  phoneNumber="5511987654321"
+                  size="sm"
+                  className="bg-green-500 hover:bg-green-600 text-white"
+                >
+                  Confirmar
+                </WhatsAppButton>
                 <Button size="sm" variant="outline">Editar</Button>
                 <Button size="sm" variant="destructive">Cancelar</Button>
               </div>
@@ -80,7 +97,21 @@ export function Appointments() {
                   Acompanhamento de diabetes - Avaliação de exames
                 </p>
               </div>
-              <div className="flex gap-2 ml-4">
+              <div className="flex flex-col gap-2 ml-4">
+                <WhatsAppButton
+                  message={formatAppointmentConfirmation({
+                    title: 'Consulta com Endocrinologista',
+                    doctor: 'Dra. Maria Santos',
+                    date: '20/12/2025',
+                    time: '10:30',
+                    location: 'Hospital Central',
+                  })}
+                  phoneNumber="5511912345678"
+                  size="sm"
+                  className="bg-green-500 hover:bg-green-600 text-white"
+                >
+                  Confirmar
+                </WhatsAppButton>
                 <Button size="sm" variant="outline">Editar</Button>
                 <Button size="sm" variant="destructive">Cancelar</Button>
               </div>

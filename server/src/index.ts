@@ -10,6 +10,7 @@ import googleCalendarRoutes from './routes/googleCalendar.js';
 import googleAuthRoutes from './routes/googleAuth.js';
 import emailRoutes from './routes/email.js';
 import cronRoutes from './routes/cron.js';
+import whatsappRoutes from './routes/whatsapp.js';
 import { authMiddleware, AuthenticatedRequest } from './middleware/auth.js';
 import { getAuthorizationUrl } from './services/googleCalendar.js';
 import { Response } from 'express';
@@ -75,6 +76,9 @@ app.use('/api/email', emailRoutes);
 
 // Cron routes
 app.use('/api/cron', cronRoutes);
+
+// WhatsApp routes (admin only)
+app.use('/api/whatsapp', whatsappRoutes);
 
 // tRPC middleware
 app.use('/api/trpc', createExpressMiddleware({
