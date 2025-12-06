@@ -48,6 +48,8 @@ export const authRouter = router({
         userId: user.id,
         email: user.email,
         role: user.role as 'patient' | 'admin' | 'professional',
+        isProfessional: user.isProfessional || false,
+        isAdmin: user.isAdmin || false,
       });
 
       return {
@@ -113,6 +115,8 @@ export const authRouter = router({
         userId,
         email: input.email,
         role: 'patient',
+        isProfessional: false,
+        isAdmin: false,
       });
 
       return {

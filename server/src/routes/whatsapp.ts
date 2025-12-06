@@ -1,13 +1,13 @@
 import { Router } from 'express';
 import { getWhatsAppService } from '../services/whatsappService';
-import { authenticateToken } from '../middleware/auth';
+import { authMiddleware } from '../middleware/auth';
 
 const router = Router();
 
-// Middleware para verificar se usuário é admin
-const requireAdmin = (req: any, res: any, next: any) => {
-  if (!req.user || !req.user.isAdmin) {
-    return res.status(403).json({ error: 'Access denied. Admin only.' });
+// Middleware para verificar se usuário é profissional ou admin
+const requireProfessionalOrAdmin = (req: any, res: any, next: any) => {
+  if (!req.user || (!req.user.isProfessional && !req.user.isAdmin)) {
+    return res.status(403).json({ error: 'Access denied. Professional or Admin only.' });
   }
   next();
 };
@@ -16,7 +16,7 @@ const requireAdmin = (req: any, res: any, next: any) => {
  * GET /api/whatsapp/status
  * Retorna status da conexão WhatsApp
  */
-router.get('/status', authenticateToken, requireAdmin, (req, res) => {
+router.get('/status', authMiddleware, requireProfessionalOrAdmin, (req, res) => {
   try {
     const whatsappService = getWhatsAppService();
     const status = whatsappService.getStatus();
@@ -38,7 +38,7 @@ router.get('/status', authenticateToken, requireAdmin, (req, res) => {
  * POST /api/whatsapp/start
  * Inicia serviço WhatsApp
  */
-router.post('/start', authenticateToken, requireAdmin, async (req, res) => {
+router.post('/start', authMiddleware, requireProfessionalOrAdmin, async (req, res) => {
   try {
     const whatsappService = getWhatsAppService();
     await whatsappService.start();
@@ -60,7 +60,7 @@ router.post('/start', authenticateToken, requireAdmin, async (req, res) => {
  * POST /api/whatsapp/stop
  * Para serviço WhatsApp
  */
-router.post('/stop', authenticateToken, requireAdmin, async (req, res) => {
+router.post('/stop', authMiddleware, requireProfessionalOrAdmin, async (req, res) => {
   try {
     const whatsappService = getWhatsAppService();
     await whatsappService.stop();
@@ -82,7 +82,7 @@ router.post('/stop', authenticateToken, requireAdmin, async (req, res) => {
  * POST /api/whatsapp/send
  * Envia mensagem individual
  */
-router.post('/send', authenticateToken, requireAdmin, async (req, res) => {
+router.post('/send', authMiddleware, requireProfessionalOrAdmin, async (req, res) => {
   try {
     const { phoneNumber, message } = req.body;
 
@@ -113,7 +113,7 @@ router.post('/send', authenticateToken, requireAdmin, async (req, res) => {
  * POST /api/whatsapp/send-medication-reminder
  * Envia lembrete de medicamento
  */
-router.post('/send-medication-reminder', authenticateToken, requireAdmin, async (req, res) => {
+router.post('/send-medication-reminder', authMiddleware, requireProfessionalOrAdmin, async (req, res) => {
   try {
     const { phoneNumber, patientName, medicationName, dosage, time } = req.body;
 
@@ -149,7 +149,7 @@ router.post('/send-medication-reminder', authenticateToken, requireAdmin, async 
  * POST /api/whatsapp/send-appointment-reminder
  * Envia lembrete de consulta
  */
-router.post('/send-appointment-reminder', authenticateToken, requireAdmin, async (req, res) => {
+router.post('/send-appointment-reminder', authMiddleware, requireProfessionalOrAdmin, async (req, res) => {
   try {
     const { phoneNumber, patientName, doctorName, date, time, location } = req.body;
 
@@ -186,7 +186,7 @@ router.post('/send-appointment-reminder', authenticateToken, requireAdmin, async
  * POST /api/whatsapp/send-exam-result
  * Envia notificação de resultado de exame
  */
-router.post('/send-exam-result', authenticateToken, requireAdmin, async (req, res) => {
+router.post('/send-exam-result', authMiddleware, requireProfessionalOrAdmin, async (req, res) => {
   try {
     const { phoneNumber, patientName, examName, result, doctorName } = req.body;
 
@@ -222,7 +222,7 @@ router.post('/send-exam-result', authenticateToken, requireAdmin, async (req, re
  * POST /api/whatsapp/send-bulk
  * Envia mensagens em massa
  */
-router.post('/send-bulk', authenticateToken, requireAdmin, async (req, res) => {
+router.post('/send-bulk', authMiddleware, requireProfessionalOrAdmin, async (req, res) => {
   try {
     const { messages } = req.body;
 

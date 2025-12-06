@@ -144,6 +144,8 @@ router.get('/google/callback', async (req: Request, res: Response) => {
       userId: user.id,
       email: user.email,
       role: user.role as 'patient' | 'admin' | 'professional',
+      isProfessional: user.isProfessional || false,
+      isAdmin: user.isAdmin || false,
     });
 
     // Redirecionar para o frontend com token

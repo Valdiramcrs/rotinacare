@@ -8,6 +8,8 @@ export interface AuthenticatedRequest extends Request {
     email?: string;
     name?: string;
     role?: string;
+    isProfessional?: boolean;
+    isAdmin?: boolean;
   };
 }
 
@@ -36,6 +38,8 @@ export async function authMiddleware(
         userId: payload.userId,
         email: payload.email,
         role: payload.role,
+        isProfessional: payload.isProfessional,
+        isAdmin: payload.isAdmin,
       };
       
       next();
@@ -74,6 +78,8 @@ export async function optionalAuthMiddleware(
           userId: payload.userId,
           email: payload.email,
           role: payload.role,
+          isProfessional: payload.isProfessional,
+          isAdmin: payload.isAdmin,
         };
       } catch {
         // Ignora erro - continua sem autenticação

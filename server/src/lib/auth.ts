@@ -8,6 +8,8 @@ export interface TokenPayload {
   userId: string;
   email: string;
   role: 'patient' | 'admin' | 'professional';
+  isProfessional?: boolean;
+  isAdmin?: boolean;
 }
 
 /**
